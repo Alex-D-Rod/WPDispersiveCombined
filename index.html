@@ -1,0 +1,1336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NLS in Weighted Spaces — Reveal.js Deck</title>
+  <link rel="stylesheet" href="vendor/reveal/reset.css">
+  <link rel="stylesheet" href="vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="assets/theme.css">
+  <script>
+    window.MathJax = {
+      tex: {
+        loader: { load: ['[tex]/color'] },
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true,
+        macros: {
+          X: "\\mathcal{X}",
+          R: "\\mathbb{R}",
+          C: "\\mathbb{C}",
+          la: "\\langle",
+          ra: "\\rangle",
+          dd: "\\,d",
+          abs: ["\\left\\lvert #1\\right\\rvert", 1],
+          norm: ["\\left\\lVert #1\\right\\rVert", 1]
+        },
+        packages: {'[+]': ['color']}
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="vendor/mathjax/tex-svg.js"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section class="title-slide">
+  <div class="wavefield"><span style="--delay:0.2s"></span><span style="--delay:1.2s"></span><span style="--delay:2.4s"></span><span style="--delay:3.6s"></span></div>
+  <div class="title-grid">
+    <div>
+      <!--<div class="title-chip">weighted spaces · one dimension · combined nonlinearities</div>-->
+      <h1 style="text-align: center;">Well-posedness for Dispersive PDE <br> with <span class="gold">combined</span> <br> nonlinearities.</h1>
+      <div style="text-align: center;" class="title-meta">Alex D. Rodriguez · FIU · Puerto Morelos 2026</div>
+      <!--<div class="pill-row" style="margin-top:34px">
+        <span class="pill">local theory in \(\X\)</span>
+        <span class="pill">pseudoconformal globalization</span>
+        <span class="pill">numerics + blow-up criteria</span>
+      </div> -->
+    </div>
+    <div class="equation-hero">
+      <div class="math-display big">
+        \[
+          \begin{cases}
+            iu_t + u_{xx} + \mathcal{N}(u)u = 0, \\
+            u(x,0) = \psi(x)
+          \end{cases}
+        \]
+        
+        \[
+        \mathcal{N}(u)=\lambda_1 |u|^{\alpha_1}+\lambda_2 |u|^{\alpha_2}+\cdots
+        \]
+      </div>
+      <!--<p class="small muted" style="color:rgba(255,255,255,.72);margin-top:18px">The main point: make the space independent of the exponent, then sum over all nonlinear terms.</p>-->
+    </div>
+  </div>
+</section>
+
+<section style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+  
+  <span class="kicker">Introduction</span>
+  <h2>The equation and a brief history</h2>
+  <div class="layout-2 narrow-right" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+    <div>
+      <div class="math-display">
+        \[
+        \begin{cases}
+        i\partial_tu+\partial_x^2u+\mathcal N(u)u=0,\\
+        u(x,0)=u_0(x),
+        \end{cases}
+        \qquad
+        \mathcal N(u)=\sum_k d_k\abs u^{\alpha_k}.
+        \]
+      </div>
+      
+      <!-- List remains centered as a block, but text aligns left for readability -->
+      <ul class="clean small" style="display: flex; flex-direction: column; gap: 24px; text-align: left; max-width: 85%; margin: 0 auto;">
+        <li class="fragment fade-up">LWP/GWP in a Sobolev space for single and two nonlinear terms (Ohta '95, Tao-Visan-Zhang '07, Pocovnicu et al. '12, Carles-Sparber '21, ...)</li>
+        <li class="fragment fade-up">LWP/GWP in weighted Sobolev spaces Casenave-Naumkin '16 allowing for small power nonlinearity in any dimension</li>
+      </ul>
+    </div>
+  </div>
+   <!--<div class="term-stream">
+      <div class="term-core">many powers<br>one space</div>
+      <div class="term" style="--delay:0s">\(d_0|u|^{\alpha_0}\)</div>
+      <div class="term" style="--delay:-2s">\(d_1|u|^{\alpha_1}\)</div>
+      <div class="term" style="--delay:-4s">\(d_2|u|^{\alpha_2}\)</div>
+      <div class="term" style="--delay:-6s">\(\cdots\)</div>
+      <div class="term" style="--delay:-8s">\(d_k|u|^{\alpha_k}\)</div>
+    </div>
+  </div>-->
+  <div class="callout blue fragment fade-up" style="margin-top: 20px; max-width: 85%;">
+    <strong><span style="font-weight: bold;" class="gold">Question:</span></strong> Can we construct a weighted-space not only treats small powers, but also many or infinitely many powers at once?
+  </div>
+</section>
+
+<section>
+  <span class="kicker">The Nonlinear term</span>
+  <h2>Why small powers fail and the solution</h2>
+  <div class="layout-2">
+    <div class="glass fragment fade-up">
+      <h3>The regularity issue</h3>
+      <p class="small">For small nonlinear terms \(0 < \alpha < 1\) differentiating \(|u|^\alpha u\) can introduce singularities.</p>
+      <div class="math-display small">
+        \[
+        \partial (\abs u^{\alpha}) \approx \alpha \abs u^{\alpha-1} \abs \partial u.
+        \]
+      </div>
+      <p class="small muted fragment fade-up">If u becomes 0, the term becomes singular.</p>
+    </div>
+    <div class="glass fragment fade-up">
+      <h3>The solution</h3>
+      <p class="small">If we ensure that u is bounded away from zero, the term remains well-behaved.</p>
+      <div class="math-display small">
+        \[
+        \inf_{x\in \mathbb{R}} \la x\ra^n \abs{u_0(x)} \geq \lambda > 0.
+        \]
+      </div>
+      <p class="small muted fragment fade-up">This ensures that the initial data is bounded away from zero, but how do we maintain this bound as time evolves?</p>
+    </div>
+  </div>
+  <div class="callout fragment fade-up" style="margin-top:22px">
+    <p class= "fragment fade-up">Using the FTC <!--\( \displaystyle {u(x,t) = u_0(x) + i\int_0^t  u_{xx} ds} \)--> and the Sobolev embedding then</p>
+    <div class="math-display fragment fade-up">
+      \[
+      \inf_{x\in \mathbb{R}} \la x\ra^n \abs{u(t,x)} \geq \inf_{x\in \mathbb{R}} \la x\ra^n \abs{u_0(x)} - t \norm{\la x\ra^n \partial_x^2 u}_{L^\infty} \geq \lambda - t\norm{\la x\ra^n \partial_x^2 u}_{H^1}.
+      \]
+  </div>
+  <p class="small muted fragment fade-up">Let \(u = e^{it\partial_x^2}u_0\), then if we control \(\norm{\la x\ra^n e^{it\partial_x^2}\partial_x^2 u_0}_{H^1}\) we can maintain the lower bound for finite time.</p>
+</section>
+
+<section>
+  <span class ="kicker">Controlling the weighted linear flow</span>
+  <h2>Two different approaches</h2>
+  <div class="layout-2">
+    <div class="glass fragment fade-up">
+      <h3><span class="gold">Casenave-Naumkin</span> method:</h3>
+      <p class="small">Use integer weights and an induction to show</p>
+      <div class="math-display small">
+        \[
+        \norm{\la x \ra^n e^{it\partial_x^2}\partial_x^\beta u_0(x)}_{L^2} \leq \sum_{k=0}^\beta \norm{\la x \ra^{n-k} \partial_x^k u_0(x)}_{L^2}.
+        \]
+      </div>
+    </div>
+    <div class="glass fragment fade-up">
+      <h3>A <span class="gold">variation:</span></h3>
+      <p class="small"> Use a Nahas-Ponce interpolation to show</p>
+      <div class="math-display small">
+        \[
+        \|\langle x \rangle^{b}e^{it\partial_x^2}f\|_{L^2} \leq C \langle t \rangle^b\big( \|J^{b}f\|_{L^2}+\|\langle x\rangle^b f\|_{L^2} \big).
+        \]
+      </div>
+      <p class="small muted fragment fade-up">This avoids the induction and allows for \(b \in \R^+\)</p> 
+    </div>
+  </div>
+    <div class="callout fragment fade-up" style="margin-top:10px">
+      <h3>The benifits of <span class="gold">1D:</span></h3>
+      <p class="small"> In 1D the weighted linear flow can be controlled directly via the Sobolev embedding and bound above, with no need to take extra derivatives in \(L^\infty\).</p>
+    </div>
+    <div class="callout danger fragment fade-up" style="margin-top:10px">
+      <h3>The challenges of <span class="gold">higher dimensions:</span></h3>
+      <p class="small">In higher dimensions, the control of the linear flow becomes significantly more complex, requiring the use of a Taylor expansion</p>
+      <div class="math-display small">
+        \[
+         e^{it\Delta}f= \sum^P_{j = 0}\frac{(it)^j}{j!}\Delta^jf + \frac{i^{P+1}}{P!}\int_0^t(t-s)^P e^{is\Delta}\Delta^{P+1}f(s)ds.
+        \]
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class ="kicker">Deciding where our solution lives</span>
+  <h2>Construction of the weighted space \(\mathcal{X}\)</h2>
+  <p class="small muted fragment fade-up"> The computations on the linear flow lead to the construction of the weighted space.</p>
+  <div class="layout-2" style="margin-top:10px;">
+    <div class="glass fragment fade-up" style="height: fit-content; height: -moz-fit-content; min-height: auto; padding-bottom: 10px; width:auto;">
+      <div class="math-display small" >
+        \[
+        \X=\left\{
+        \begin{array}{ll}
+        &u\in\dot H^M(\R)\cap\dot H^1(\R):\\
+        \mathrm{I.}&\la x\ra^n u\in L^\infty,\\
+        \mathrm{II.}&\la x\ra^n\partial_x^\beta u\in L^2,
+        \quad 1\leq\beta\leq r,\\
+        \mathrm{III.}&\partial_x^\beta u\in L^2,
+        \quad r+1\leq\beta\leq M
+        \end{array}\right.
+        \]
+      </div>
+    </div>
+    <div class="layer-stack">
+      <div class="layer fragment fade-up">\({n > 0}, \; r\geq 3, \, \, \text{ and }\, \, M \geq  n+ r.\)</div>
+      <div class="layer fragment fade-up">
+        <div class = "math-display small"> \[\|u\|_{\mathcal{X}} = \|\langle x \rangle^n u\|_{L^{\infty}} + \sum_{k=1}^{r} \|\langle x \rangle^{n} \partial_{x}^{k} u\|_{L^2} + {\sum_{k=r+1}^{M} \|\partial_{x}^{k} u\|_{L^2}}\]</div>
+      </div>
+    </div>
+  </div>  
+    <div class="callout good fragment fade-up" style="margin-top:10px">
+      <h3>What is <span class="gold">different</span> here? </h3>
+      <p class="small"> We take fractional power weights, leverage the flexibility of the 1D setting to avoid derivatives in \(L^\infty\), and remove depedence on \(\alpha\) in the space.</p>
+    </div>
+  <p class="small muted fragment fade-up" style="margin-top:10px">Note: We do not require \(u \in L^2\) for this construction, but for \(n > \frac{1}{2}\) the space \(\mathcal{X}\) is embedded into \(H^M(\mathbb{R})\)</p>
+</section>
+
+<section data-transition="slide-in">
+  <span class="kicker">Controlling the nonlinear term</span>
+  <h2>Nonlinear estimates</h2>
+  <p class="small muted">With this we get an idea on avoiding dependence on \(\alpha\) in the space.</p>
+  <div class="r-stack">
+    <div class="math-display fragment fade-out" data-fragment-index="1">
+      \[
+      \partial_{x}^{\beta}(|u|^{\alpha}u) = C_{0,\beta}|u|^{\alpha}\partial_{x}^{\beta}u
+          + \hspace{-.4cm}  
+          \sum_{\substack{\gamma + \rho = \beta \\ \gamma \neq 0}} \sum_{k=1}^\gamma\sum_{\substack{\ell_{1}+...+\ell_{k} = \gamma \\ \ell_{j} \geq 1}} \tilde C_{l_1...l_k}
+          |u|^{\alpha - 2k}\prod_{j=0}^k\partial_x^{l_j}(|u|^2)\partial_{x}^{\rho}u.
+      \]
+    </div>
+
+    <div class="math-display fragment current-visible" data-fragment-index="1">
+      \[
+      \big\| \langle x \rangle^n \partial_x^\beta (|u|^{\alpha} u) \big\|_{L^{2}} 
+      = \bigg\| \langle x \rangle^n \bigg( C_{0,\beta}|u|^{\alpha}\partial_{x}^{\beta}u + \sum_{\substack{\gamma + \rho = \beta \\ \gamma \neq 0}}\sum_{k = 1}^{\gamma}\sum_{\substack{l_1+...+l_k=\gamma, \\ l_j \geq 1}} \tilde C_{l_1...l_k}\Big(|u|^{\alpha - 2k}\prod_{j=1}^{k}\partial_x^{l_j}(|u|^2) \Big)\partial_x^\rho u \bigg) \bigg\|_{L^2}
+      \]
+    </div>
+
+    <div class="math-display fragment current-visible" data-fragment-index="2">
+      \[
+      \big\| \langle x \rangle^n \partial_x^\beta (|u|^{\alpha} u) \big\|_{L^{2}} 
+      \leq \norm{\langle x \rangle^n |u|^{\alpha} \partial_x^{\beta} u }_{L^2} + \Big\| {\langle x \rangle^n \sum_{\substack{\gamma + \rho = \beta \\ \gamma \neq 0}}\sum_{k = 1}^{\gamma}\sum_{\substack{l_1+...+l_k=\gamma, \\ l_j \geq 1}} \tilde C_{l_1...l_k}\Big(|u|^{\alpha - 2k}\prod_{j=1}^{k}\partial_x^{l_j}(|u|^2) \Big)\partial_x^\rho u} \Big\|_{L^2}
+      \]
+    </div>
+
+    <div class="math-display fragment fade-in" data-fragment-index="3">
+      \[
+      \big\| \langle x \rangle^n \partial_x^\beta (|u|^{\alpha} u) \big\|_{L^{2}} 
+      \leq \underbrace{\norm{\langle x \rangle^n |u|^{\alpha} \partial_x^{\beta} u }_{L^2}}_{A} + \underbrace{\Big\| {\langle x \rangle^n \sum_{\substack{\gamma + \rho = \beta \\ \gamma \neq 0}}\sum_{k = 1}^{\gamma}\sum_{\substack{l_1+...+l_k=\gamma, \\ l_j \geq 1}} \tilde C_{l_1...l_k}\Big(|u|^{\alpha - 2k}\prod_{j=1}^{k}\partial_x^{l_j}(|u|^2) \Big)\partial_x^\rho u} \Big\|_{L^2}}_{B}
+      \]
+    </div>
+  </div>
+</section>
+
+<section data-transition="fade-out">
+  <span class="kicker">Controlling the nonlinear term</span>
+  <h2>Nonlinear estimates</h2>
+  <p class="small muted">With this we get an idea on avoiding dependence on \(\alpha\) in the space.</p>
+  <div class="math-display">
+    \[
+    \big\| \langle x \rangle^n \partial_x^\beta (|u|^{\alpha} u) \big\|_{L^{2}} 
+    \leq \underbrace{\norm{\langle x \rangle^n |u|^{\alpha} \partial_x^{\beta} u }_{L^2}}_{A} + \underbrace{\Big\| {\langle x \rangle^n \sum_{\substack{\gamma + \rho = \beta \\ \gamma \neq 0}}\sum_{k = 1}^{\gamma}\sum_{\substack{l_1+...+l_k=\gamma, \\ l_j \geq 1}} \tilde C_{l_1...l_k}\Big(|u|^{\alpha - 2k}\prod_{j=1}^{k}\partial_x^{l_j}(|u|^2) \Big)\partial_x^\rho u} \Big\|_{L^2}}_{B}
+    \]
+  </div>
+  <div class="glass" style="margin-top: 30px; padding: 20px; border: 1px solid rgba(184, 151, 95, 0.5); border-radius: 15px; background: rgba(184, 151, 95, 0.1);">
+  
+    <p style="margin: 0 0 10px 0; font-size: 0.8em; color: #b8975f; font-family: sans-serif;">Estimating Term A:</p>
+    
+    <div class="r-stack">
+      
+      <div class="math-display fragment fade-out" data-fragment-index="1">
+        \[
+        A = \norm{\langle x \rangle^n |u|^{\alpha} \partial_x^{\beta} u }_{L^2}
+        \]
+      </div>
+      
+      <div class="math-display fragment current-visible" data-fragment-index="1">
+        \[
+        A \lesssim \|u\|_{L^{\infty}}^{\alpha}\|\langle x \rangle^n \partial_x^k u\|_{L^2}
+        \]
+      </div>
+      
+      <div class="math-display fragment fade-in" data-fragment-index="2">
+        \[
+        A \lesssim \|u\|_{\mathcal{X}}^{\alpha+1}
+        \]
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<section data-transition="fade-in fade-out">
+  <span class="kicker">Controlling the nonlinear term</span>
+  <h2>Nonlinear estimates</h2>
+  <p class="small muted">We now focus on the \(B\) term</p>
+  <div class="r-stack">
+  
+    <div class="math-display fragment fade-out" data-fragment-index="1">
+      \[
+      \Big\| {\langle x \rangle^n \sum_{\substack{\gamma + \rho = \beta \\ \gamma \neq 0}}\sum_{k = 1}^{\gamma}\sum_{\substack{l_1+...+l_k=\gamma, \\ l_j \geq 1}} \tilde C_{l_1...l_k}\Big(|u|^{\alpha - 2k}\prod_{j=1}^{k}\partial_x^{l_j}(|u|^2) \Big)\partial_x^\rho u} \Big\|_{L^2}
+      \]
+    </div>
+
+    <div class="math-display fragment current-visible" data-fragment-index="1">
+      \[
+      \sum_{\substack{\gamma + \rho = \beta \\ \gamma \neq 0}}\sum_{k = 1}^{\gamma}\sum_{\substack{l_1+...+l_k=\gamma, \\ l_j \geq 1}}\sum_{\substack{ 0\leq m_j\leq \ell_j \\ j=1,\dots, k}} \tilde C_{l_1...l_k}\Big\| {\langle x \rangle^n |u|^{\alpha - 2k}\partial_{x}^{m_1}u\partial_{x}^{\ell_{1}-m_1}u...\partial_x^{m_{k}}u\partial_{x}^{\ell_{k}-m_{k}}u \partial_x^{\rho}u} \Big\|_{L^2}
+      \]
+    </div>
+
+    <div class="math-display fragment current-visible" data-fragment-index="2">
+      \[
+      \Big\| {\langle x \rangle^n |u|^{\alpha - 2k}\partial_{x}^{m_1}u\partial_{x}^{\ell_{1}-m_1}u...\partial_x^{m_{k}}u\partial_{x}^{\ell_{k}-m_{k}}u \partial_x^{\rho}u} \Big\|_{L^2}
+      \]
+    </div>
+    <div class="math-display fragment current-visible" data-fragment-index="3">
+      \[
+      \Big\| {\underline{\langle x \rangle^n |u|^{\alpha - 2k}}\partial_{x}^{m_1}u\partial_{x}^{\ell_{1}-m_1}u...\partial_x^{m_{k}}u\partial_{x}^{\ell_{k}-m_{k}}u \partial_x^{\rho}u} \Big\|_{L^2}
+      \]
+    </div>
+    <div class="math-display fragment current-visible" data-fragment-index="4">
+      \[
+      \big(\lambda^{-|\alpha-2k|}+\|u\|_{\mathcal{X}}^{|\alpha-2k|}\big)\Big\| {\la x \ra^{n-n\alpha + 2kn}\partial_{x}^{m_1}u\partial_{x}^{\ell_{1}-m_1}u...\partial_x^{m_{k}}u\partial_{x}^{\ell_{k}-m_{k}}u \partial_x^{\rho}u} \Big\|_{L^2}
+      \]
+    </div>
+    <div class="math-display fragment current-visible" data-fragment-index="5">
+      \[
+      \big(\lambda^{-|\alpha-2k|}+\|u\|_{\mathcal{X}}^{|\alpha-2k|}\big)\Big\| {\la x \ra^{-n\alpha}\la x \ra^{n}\partial_{x}^{m_1}\la x \ra^{n}u\partial_{x}^{\ell_{1}-m_1}u...\la x \ra^{n}\partial_x^{m_{k}}u\la x \ra^{n}\partial_{x}^{\ell_{k}-m_{k}}u \la x \ra^{n}\partial_x^{\rho}u} \Big\|_{L^2}
+      \]
+    </div>
+    <div class="math-display fragment current-visible" data-fragment-index="6">
+      \[
+      \big(\lambda^{-|\alpha-2k|}+\|u\|_{\mathcal{X}}^{|\alpha-2k|}\big)\| {\la x \ra^{-n\alpha}\|_{L^\infty}\|\la x \ra^{n}\partial_x^{\rho}u}\|_{L^2}\prod_{j=1}^k\|\la x \ra^{n}\partial_{x}^{m_j}\|_{L^\infty}\|\la x \ra^{n}u\partial_{x}^{\ell_{j}-m_j}u\|_{L^\infty}
+      \]
+    </div>
+    <div class="math-display fragment fade-in" data-fragment-index="7">
+      \[
+      \big(\lambda^{-|\alpha-2k|}+\|u\|_{\mathcal{X}}^{|\alpha-2k|}\big) \|u\|_{\mathcal{X}}^{2k + 1}
+      \]
+    </div>
+  </div>
+  <span class="fragment fade-up" data-fragment-index="6" style="margin-top:10px">
+    <div class="callout good fragment fade-out" data-fragment-index="7">
+      <p class="small">We choose \(\rho\) to be the largest order derivative without loss of generality, but note that this is not necessary.</p>
+    </div>
+  </span>
+  <div class="callout fragment fade-up" data-fragment-index="7">
+    <p class="small">Re-introducing the sums and a few upper bounds, the final estimate for \(B\) is </p>
+    <div class="math-display small">
+      \[
+       B  \lesssim \sum_{\substack{\gamma + \rho = \beta \\ \gamma \neq 0}}\sum_{k = 1}^{\gamma}\sum_{\substack{l_1+...+l_k=\gamma, \\ l_j \geq 1}}\big(\lambda^{-|\alpha-2k|}+\|u\|_{\mathcal{X}}^{|\alpha-2k|}\big)\sum_{\substack{ 0\leq m_j\leq \ell_j \\ j=1,\dots, k}} \big((n+1)C\big)^{2k}\tbinom{\ell_1}{m_1}\dots \tbinom{\ell_{k}}{m_{k}}\|u\|_{\mathcal{X}}^{2k+1}
+      \]
+    </div>
+  </div>
+  <p class="small muted fragment fade-up" data-fragment-index="8"> The main takeaway here is that we keep the leftover weight \( \la x\ra^{- n \alpha} \) in \(L^\infty\), removing the dependance on \(\alpha\) in \(\mathcal{X}\).</p>
+</section>
+
+<section>
+  <span class="kicker">Taking advantage of our new freedom</span>
+  <h2>Summing over <span class="gold">many</span> powers</h2>
+  <p class="fragment fade-up small muted"> With our space free of the dependence in \(\alpha\), we can now sum over finitely or infinitely many powers, under one condition.</p>
+  <div class="callout fragment fade-up" style="margin-top: 20px;">
+    <p class="small muted">Condition \((\ast)\):</p>
+    <div class="math-display small">
+      \[
+        \sum_{k=0}^{N}\sum_{0\leq \beta \leq M}|d_k|\big(1+C(\alpha_k,\beta))(R_0^{|\alpha_k-2\beta|}+|\alpha_k-2\beta|R_0^{|\alpha_k-2\beta-1|})<\infty
+      \]
+  </div>
+  <p class="small muted"> for any \(R_0>0\).</p>
+  </div>  
+  <div class="callout danger fragment fade-up"  style="margin-top: 20px;">
+    <p>For \(N\) finite this is straightforward, but what if \(N\to\infty\)?</p>
+  </div>
+</section>
+
+<section>
+  <span class ="kicker">Examples of nonlinearities</span>
+  <h2>What satisfies our condition?</h2>
+  <p class="small muted fragment fade-up"> The answers are quite interesting!</p>
+  <div class="layout-2" style="margin-top:10px;">
+    <div class="layer-stack">
+      <div class="layer fragment fade-up">Finite sums: \(\;\mathcal{N}(u) = c_1|u|^{\alpha_1} + c_2|u|^{\alpha_2} ... + c_N|u|^{\alpha_N}\)</div>
+      <div class="layer fragment fade-up">Trigonometric Functions: \(\mathcal{N}(u) = \sin(\alpha|u|^\gamma)\;\) or \(\;\mathcal{N}(u) = \cos(\alpha|u|^\gamma)\)</div>
+      <div class="layer fragment fade-up"><p>Exponential Functions: </p> \(\qquad \mathcal{N}(u) = e^{\alpha|u|^\gamma}\)</div>
+    </div>
+    <div class="term-stream fragment fade-up" style="min-height: auto; padding-bottom: 20px; width:auto;">
+      <div class="term-core">\(\mathcal{X}\)</div>
+      <div class="term" style="--delay:0s">\(\pm|u|^{p}u \pm |u|^{q}u\)</div>
+      <div class="term" style="--delay:-2s">\(\cos(\alpha|u|^\gamma)u\)</div>
+      <div class="term" style="--delay:-4s">\(\sin(\alpha|u|^\gamma)u\)</div>
+      <div class="term" style="--delay:-6s">\(e^{\alpha|u|^\gamma}u\)</div>
+      <div class="term" style="--delay:-8s">\(\pm|u|^{\alpha_1}u \pm |u|^{\alpha_2}u \pm |u|^{\alpha_3}u + ...\)</div>
+    </div>
+  </div>  
+    <div class="callout fragment fade-up small" style="margin-top:15px">
+      <h3 style="display:inline"><span class="gold">LWP</span> Theorem</h3>
+      <p class="small muted" style="display:inline">(Ria&ntilde;o, ADR, Roudenko) Nonlinearity '26</p>
+      <p>
+        Let \(\{d_k\}\) be a sequence of complex numbers and \(\{\alpha_k\}\) be a sequence of positive real numbers. Suppose that condition \((\ast)\) holds. If \(u_0 \in \mathcal{X}\) satisfies non-vanishing condition, then there exist \(T>0\) and a unique solution \(u \in C([-T,T], \mathcal{X})\) of the combined NLS such that
+        <div class="math-display">
+          \[
+          \sup_{t\in [-T,T]}\|\langle x\rangle^n(u(t)-u_0)\|_{L^{\infty}(\mathbb R)}\leq \frac{\lambda}{2}.
+          \]
+        </div>
+        Moreover, the map \(u_0 \mapsto u(\cdot,t)\) is Lipshitz continuous.
+      </p>
+    </div>
+</section>
+
+<section>
+  <span class="kicker">The differences</span>
+  <h2>Where our work departs from the CN technique</h2>
+  <table class="compare-table">
+    <thead><tr><th></th><th>Reference</th><th>Our work</th></tr></thead>
+    <tbody>
+      <tr class="fragment fade-up"><td>Nonlinearity</td><td>one fixed power \(\lambda |u|^\alpha u\)</td><td class="win">finite or infinite \(\sum_k d_k |u|^{\alpha_k}u\)</td></tr>
+      <tr class="fragment fade-up"><td>Weight</td><td>integer \(n\) constrained by \(\alpha\)</td><td class="win">fractional \(n>0\), chosen independently of all \(\alpha_k\)</td></tr>
+      <tr class="fragment fade-up"><td>Space Definition</td><td>Many derivatives in weighted \(L^\infty\)</td><td class="win">only \(\la x\ra^n u\in L^\infty\); derivatives mainly in weighted \(L^2\)</td></tr>
+      <tr class="fragment fade-up"><td>Space Dependence</td><td>dimension-independent high-regularity construction</td><td class="win">Depends on Sobolev embedding but not on nonlinear power.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout danger fragment fade-up">
+    Our adjustments allow us to track constants and provide a uniform space and well-posedness result for a wide range of nonlinearities, but extending to higher dimensions can be difficult. 
+  </div>
+</section>
+<!-- 
+<section>
+  <span class="kicker">reference architecture</span>
+  <h2>The Cazenave–Naumkin strategy</h2>
+  <p class="small muted">The reference method avoids Strichartz estimates and works directly with the Duhamel map.</p>
+  <div class="flow-diagram">
+    <div class="flow-node fragment fade-up"><strong>1</strong><br>weighted non-vanishing<br>\(\inf_x\la x\ra^n|u_0|>0\)</div>
+    <div class="flow-node fragment fade-up"><strong>2</strong><br>linear flow estimates in a weighted space</div>
+    <div class="flow-node fragment fade-up"><strong>3</strong><br>differentiate \(|u|^\alpha u\) safely</div>
+    <div class="flow-node fragment fade-up"><strong>4</strong><br>contract and preserve the lower bound</div>
+    <div class="flow-node fragment fade-up"><strong>5</strong><br>pseudoconformal transform to global time</div>
+  </div>
+  <div class="callout good fragment fade-up" style="margin-top:25px">
+    <strong>What we keep:</strong> non-vanishing, direct fixed point, and pseudoconformal globalization.
+  </div>
+</section>
+
+<section>
+  <span class="kicker">the space</span>
+  <h2>The weighted space \(\X\)</h2>
+  <div class="layout-2 narrow-left">
+    <div class="layer-stack">
+      <div class="layer fragment fade-right">top layer: \(\la x\ra^n u\in L^\infty\)</div>
+      <div class="layer fragment fade-right">middle layer: \(\la x\ra^n\partial_x^\beta u\in L^2\), \(1\leq\beta\leq r\)</div>
+      <div class="layer fragment fade-right">high derivatives: \(\partial_x^\beta u\in L^2\), \(r+1\leq\beta\leq M\)</div>
+      <div class="layer fragment fade-right">parameters: \(n>0,\ r\geq3,\ M\geq n+r\)</div>
+    </div>
+    <div class="callout fragment fade-up" style="width: fit-content; height: fit-content;">
+      <div class="math-display small">
+        \[
+        \X=\left\{
+        \begin{array}{ll}
+        &u\in\dot H^M(\R)\cap\dot H^1(\R):\\
+        \mathrm{I.}&\la x\ra^n u\in L^\infty,\\
+        \mathrm{II.}&\la x\ra^n\partial_x^\beta u\in L^2,
+        \quad 1\leq\beta\leq r,\\
+        \mathrm{III.}&\partial_x^\beta u\in L^2,
+        \quad r+1\leq\beta\leq M
+        \end{array}\right\}
+        \]
+      </div>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">regularity from non-vanishing</span>
+  <h2>Why small powers force a lower bound</h2>
+  <div class="layout-2 narrow-right">
+    <div>
+      <p class="small">Differentiating \(\abs u^\alpha u\) produces factors of the form</p>
+      <div class="math-display small">
+        \[
+        \abs u^{\alpha-2\beta}
+        \prod_{j=1}^{2\beta+1}\partial_x^{m_j}u.
+        \]
+      </div>
+      <p class="small fragment fade-up">When \(\alpha\lt2\beta\), the exponent of \(|u|\) is negative. The derivative map is regular only while the solution stays away from the origin.</p>
+      <div class="callout good fragment fade-up">
+        \[
+        \inf_x\la x\ra^n\abs{u_0(x)}\geq\lambda>0,
+        \qquad
+        \norm{\la x\ra^n(u(t)-u_0)}_{L^\infty}\leq\lambda/2.
+        \]
+      </div>
+    </div>
+    <div class="nonvanish-stage fragment blur-in">
+      <div class="label safe">regular branch: weighted lower bound</div>
+      <div class="label risky">singular branch: crosses zero</div>
+      <svg viewBox="0 0 920 390" role="img" aria-label="Conceptual non-vanishing visualization">
+        <defs>
+          <marker id="arrowGold" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#b8975f"></path>
+          </marker>
+        </defs>
+        <line x1="205" y1="70" x2="205" y2="330" stroke="rgba(8,30,63,.18)" stroke-width="2"></line>
+        <line x1="75" y1="200" x2="335" y2="200" stroke="rgba(8,30,63,.18)" stroke-width="2"></line>
+        <circle cx="205" cy="200" r="50" fill="rgba(29,122,111,.06)" stroke="rgba(29,122,111,.45)" stroke-width="2"></circle>
+        <circle class="pulse-dot" cx="205" cy="200" r="5" fill="#081e3f"></circle>
+        <path class="orbit-path" d="M 260 170 C 330 180, 320 285, 230 300 C 110 320, 92 150, 210 116 C 244 106, 280 125, 260 170" fill="none" stroke="#1d7a6f" stroke-width="6" stroke-linecap="round" marker-end="url(#arrowGold)"></path>
+        <text x="114" y="347" fill="#1d7a6f" font-size="18" font-weight="700">|u| ≥ c⟨x⟩⁻ⁿ</text>
+
+        <line x1="675" y1="70" x2="675" y2="330" stroke="rgba(8,30,63,.18)" stroke-width="2"></line>
+        <line x1="545" y1="200" x2="805" y2="200" stroke="rgba(8,30,63,.18)" stroke-width="2"></line>
+        <circle class="blow-ring" cx="675" cy="200" r="15" fill="none" stroke="#a63535" stroke-width="5"></circle>
+        <circle cx="675" cy="200" r="5" fill="#081e3f"></circle>
+        <path class="risky-path" d="M 560 310 C 600 250, 650 220, 675 200 C 718 165, 746 130, 800 92" fill="none" stroke="#a63535" stroke-width="6" stroke-linecap="round" marker-end="url(#arrowGold)"></path>
+        <text x="548" y="347" fill="#a63535" font-size="18" font-weight="700">negative powers blow up near 0</text>
+      </svg>
+    </div>
+  </div>
+  <div class="footer-note">Conceptual visualization, not numerical data.</div>
+</section>
+
+<section>
+  <span class="kicker">linear mechanism</span>
+  <h2>The 1D linear estimate that keeps the fixed point open</h2>
+  <div class="layout-2">
+    <div class="formula-card">
+      <h3>Propagate the space</h3>
+      <div class="math-display small">
+        \[
+        \norm{e^{it\partial_x^2}f}_{\X}
+        \leq C\la t\ra^{n+1}\norm f_{\X}.
+        \]
+      </div>
+    </div>
+    <div class="formula-card">
+      <h3>Stay close in the non-vanishing norm</h3>
+      <div class="math-display small">
+        \[
+        \norm{\la x\ra^n(e^{it\partial_x^2}f-f)}_{L^\infty}
+        \leq C|t|\la t\ra^n\norm f_{\X}.
+        \]
+      </div>
+    </div>
+  </div>
+  <div class="layout-3" style="margin-top:24px">
+    <div class="mini-card fragment fade-up"><h3>Fractional weights</h3><p class="small">Nahas–Ponce type weighted estimates replace repeated integer commutations.</p></div>
+    <div class="mini-card fragment fade-up"><h3>1D Sobolev</h3><p class="small">\(H^1(\R)\hookrightarrow L^\infty(\R)\) reduces the weighted \(L^\infty\) ladder.</p></div>
+    <div class="mini-card fragment fade-up"><h3>No Strichartz</h3><p class="small">The proof closes by direct Duhamel estimates in \(\X\).</p></div>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">coefficient hypothesis</span>
+  <h2>What must be summable?</h2>
+  <div class="series-visual">
+    <div class="series-stack fragment fade-right">
+      <div class="series-strip" style="top:0;--delay:0s">\(k=0\)</div>
+      <div class="series-strip" style="top:0;--delay:.55s">\(k=1\)</div>
+      <div class="series-strip" style="top:0;--delay:1.1s">\(k=2\)</div>
+      <div class="series-strip" style="top:0;--delay:1.65s">\(\cdots\)</div>
+      <div class="series-strip" style="top:0;--delay:2.2s">\(k=m\)</div>
+    </div>
+    <div class="sum-gate fragment zoom-in">\(\sum\)</div>
+    <div class="glass">
+      <p class="small">For \(\beta=0,\dots,M\), set</p>
+      <div class="math-display small">
+        \[
+        C(\alpha,\beta)=
+        \begin{cases}
+        0,&\beta=0,\\
+        \prod_{j=0}^{\beta-1}|\alpha-2j|,&\beta\geq1.
+        \end{cases}
+        \]
+      </div>
+      <p class="small fragment fade-up">The condition must hold for <strong>every</strong> \(R>0\):</p>
+    </div>
+  </div>
+  <div class="callout fragment fade-up" style="margin-top:18px">
+    <div class="math-display small">
+      \[
+      \sum_{k=0}^{\infty}\sum_{\beta=0}^{M}
+      |d_k|\bigl(1+C(\alpha_k,\beta)\bigr)
+      \left(R^{|\alpha_k-2\beta|}+|\alpha_k-2\beta|R^{|\alpha_k-2\beta-1|}\right)\lt\infty.
+      \]
+    </div>
+    <p class="small"><strong>Careful:</strong> the shifted exponent is \(|\alpha_k-2\beta-1|\), not \(|\alpha_k-2\beta|-1\).</p>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">local theorem</span>
+  <h2>Local well-posedness in \(\X\)</h2>
+  <div class="theorem-box">
+    <p class="small"><strong>Theorem (Riaño–Rodriguez–Roudenko).</strong> Let \(d_k\in\C\), \(\alpha_k>0\), and let \(n,r,M\) define \(\X\). Assume the coefficient condition holds for every \(R>0\).</p>
+    <p class="small">If \(u_0\in\X\) and</p>
+    <div class="math-display small">
+      \[
+      \inf_{x\in\R}\la x\ra^n|u_0(x)|\geq\lambda>0,
+      \]
+    </div>
+    <p class="small">then there exists \(T>0\) and a unique solution \(u\in C([-T,T];\X)\) of the combined NLS. Moreover,</p>
+    <div class="math-display small">
+      \[
+      \sup_{|t|\leq T}\norm{\la x\ra^n(u(t)-u_0)}_{L^\infty}\leq\lambda/2.
+      \]
+    </div>
+    <p class="small">For every \(0\lt\widetilde T\lt T\), the data-to-solution map is locally Lipschitz into \(C([-\widetilde T,\widetilde T];\X)\).</p>
+  </div>
+  <div class="pill-row" style="margin-top:20px;justify-content:center">
+    <span class="pill fragment fade-up">no lower bound on \(\alpha_k\) except positivity</span>
+    <span class="pill fragment fade-up">one fixed ambient space</span>
+    <span class="pill fragment fade-up">finite and infinite nonlinearities</span>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">examples</span>
+  <h2>Nonlinear terms covered by the local theorem</h2>
+  <div class="layout-3">
+    <div class="mini-card fragment fade-up">
+      <h3>Finite sums</h3>
+      <div class="math-display small">\[\mathcal N(u)=\sum_{k=1}^{K}d_k|u|^{\alpha_k}.\]</div>
+      <p class="small muted">The coefficient condition is automatic.</p>
+    </div>
+    <div class="mini-card fragment fade-up">
+      <h3>Exponential responses</h3>
+      <div class="math-display small">\[e^{a|u|^\gamma}-1=\sum_{k=1}^{\infty}\frac{a^k}{k!}|u|^{\gamma k}.\]</div>
+      <p class="small muted">The omitted constant is restored by a phase rotation.</p>
+    </div>
+    <div class="mini-card fragment fade-up">
+      <h3>Oscillatory analytic responses</h3>
+      <div class="math-display small">\[\sin(a|u|^\gamma),\qquad \cos(a|u|^\gamma)-1.\]</div>
+      <p class="small muted">Factorial coefficients dominate polynomial dependence on \(\alpha_k\).</p>
+    </div>
+  </div>
+  <div class="callout fragment fade-up" style="margin-top:24px">
+    The proof treats these as nonlinear maps on one non-vanishing portion of \(\X\), not as separate equations with separate spaces.
+  </div>
+</section>
+-->
+<section>
+  <span class="kicker">Extending the time</span>
+  <h2>From a local to a global solution</h2>
+  <div class="layout-2 narrow-left">
+    <div>
+      <p class="small">LWP for the non-autonomous problem on \(0\leq\tau\leq b^{-1}\):</p>
+      <div class="math-display small">
+        \[
+        iv_\tau+v_{xx}+\sum_{k=0}^{\infty}d_k(1-b\tau)^{\alpha_k/2-2}|v|^{\alpha_k}v=0.
+        \]
+      </div>
+      <p class="small fragment fade-up">The coefficient is integrable exactly when \(\alpha_k>2\):</p>
+      <div class="math-display small fragment fade-up">
+        \[
+        \int_0^{1/b}(1-b\tau)^{\alpha_k/2-2}\,d\tau
+        =\frac{2}{b(\alpha_k-2)}.
+        \]
+      </div>
+      <p class="small fragment fade-up">Reversing through the transform gives GWP for our NLS!</p>
+    </div>
+    <div class="bridge pc-interval">
+      <div class="pc-interval-title">
+        The effect of the pseudoconformal transformation
+      </div>
+
+      <div class="pc-interval-frame">
+        <div class="pc-base-line"></div>
+
+      <div class="pc-growing-interval">
+          <span class="pc-end left"></span>
+          <span class="pc-end right"></span>
+
+          <span class="pc-end-label left">\(-T\)</span>
+          <span class="pc-end-label right">\(T\)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="callout blue fragment fade-up" style="margin-top:18px">
+    \[
+    u(x,t)=\frac{1}{(1+bt)^{1/2}}e^{\frac{ibx^2}{4(1+bt)}}
+    v\!\left(\frac{x}{1+bt},\frac{t}{1+bt}\right).
+    \]
+  </div>
+</section>
+
+<section>
+  <span class="kicker">global theorem</span>
+  <h2>Global well-posedness and scattering</h2>
+  <div class="theorem-box">
+    <p class="small"><strong style="font-weight: bold;">Theorem (Riaño–Rodriguez–Roudenko '26):</strong> <br>Assume \(n>1/2\), \(\alpha_k>2\) for every \(k\).</p>
+    <div class="math-display small">
+      \[
+        \sum_{k=0}^{\infty}\sum_{0\leq \beta \leq M}\frac{|d_k|}{\alpha_k-2}\big(1+C(\alpha_k,\beta))(R_0^{|\alpha_k-2\beta|}+|\alpha_k-2\beta|R_0^{|\alpha_k-2\beta-1|})<\infty.
+      \]
+    </div>
+    <p class="small">Let \(v_0\in\X\) satisfy the non-vanishing condition and set \(u_0=e^{ibx^2/4}v_0\). For \(b>0\) sufficiently large, there is a unique global solution \(u(x,t)\) with</p>
+    <div class="math-display small">
+      \[
+      u_0\in C([0,\infty);H^{s_n}(\mathbb{R}))\cap L^{\infty}\big([0,\infty);L^{\infty}(\langle x \rangle^{\frac{1}{2}}\, dx)\big),
+      \]
+      \[
+      s_n=1\quad(n>3/2),
+      \qquad
+      0< s_n < n-1/2\quad(1/2 < n \leq 3/2).
+      \]
+    </div>
+    <p class="small">Moreover, there exists \(u_+\in H^{s_n}\) such that</p>
+    <div class="math-display small">
+      \[
+      \norm{u(t)-e^{it\partial_x^2}u_+}_{H^{s_n}}\to0,
+      \qquad
+      \sup_{t\geq0}(1+t)^{1/2}\norm{u(t)}_{L^\infty}\lt\infty.
+      \]
+    </div>
+  </div>
+</section>
+
+<section class="section-slide">
+  <div class="wavefield"><span style="--delay:0s"></span><span style="--delay:1.4s"></span><span style="--delay:2.8s"></span></div>
+  <div style="height:86%;display:grid;align-content:center">
+    <span class="kicker">work in progress</span>
+    <h1>Extensions beyond the 1D NLS</h1>
+    <p class="muted" style="max-width:760px">The architecture survives, but the weights, embeddings, and commutator estimates become much more rigid.</p>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">higher dimensions</span>
+  <h2>Candidate spaces and new obstacles</h2>
+  <div class="dimension-grid">
+    <div class="dim-card fragment fade-up" data-fragment-index="0">
+      <h3>\(2D\) candidate</h3>
+      <div class="math-display small" style="margin-top:50px">
+        \[
+        \X_{2D}=\left\{
+        \begin{array}{ll}
+        &u\in H^M(\R^2):\\
+        &\la x\ra^b u\in L^\infty,\\
+        &\la x\ra^{b+1}\partial^\beta u\in L^\infty,\quad 1\leq|\beta|\leq2,\\
+        &\la x\ra^{b+1}\partial^\beta u\in L^2,\quad 3\leq|\beta|\leq r,\\
+        &\partial^\beta u\in L^2, \quad r+1 \leq|\beta|\leq M.
+        \end{array}\right.
+        \]
+      </div>
+    </div>
+    <div class="dim-card problem fragment fade-up" data-fragment-index="2">
+      <h3>Why it gets difficult</h3>
+      <ul class="clean small">
+        <li>Space construction depends on the Sobolev embedding.</li>
+        <li>Several weighted \(L^\infty\) levels must be inserted.</li>
+        <li>The linear and nonlinear estimates ask for different weight requirements.</li>
+      </ul>
+      <p class="small muted" style="margin-top:15px">The balancing act is to keep the space \(\alpha\)-independent.</p>
+    </div>
+    <div class="dim-card fragment fade-up" data-fragment-index="1">
+      <h3>\(3D\) candidate</h3>
+      <div class="math-display small" style="margin-top:25px">
+        \[
+        \X_{3D}=\left\{
+        \begin{array}{ll}
+        &u\in H^M(\R^3):\\
+        &\la x\ra^b u\in L^\infty,\\
+        &\la x\ra^{b+1}\partial u\in L^\infty,\\
+        &\la x\ra^{b+3/2}\partial^2u\in L^\infty,\\
+        &\la x\ra^{b+1}\partial^3u\in L^2,\\
+        &\la x\ra^{b+3/2}\partial^\beta u\in L^2,
+        \quad 4\leq|\beta|\leq r,\\
+        &\partial^\beta u\in L^2, \quad r+1 \leq|\beta|\leq M.
+        \end{array}\right.
+        \]
+      </div>
+    </div>
+  </div>
+  <div class="footer-note">Work in progress with I. Petrenko, O. Riaño, and S. Roudenko.</div>
+</section>
+
+<section>
+  <span class="kicker">The nonlinear Klein–Gordon</span>
+  <h2>The same architecture for the NKG</h2>
+  <div class="layout-2 narrow-left">
+    <div>
+      <div class="math-display small">
+        \[
+        w_{tt}-w_{xx}+\mu_1 w+\sum_{k=1}^{K}\nu_k|w|^{\alpha_k}w=0.
+        \]
+      </div>
+      <p class="small">Set \(\langle |\nabla|\rangle=(1-\partial_x^2)^{1/2}\) and</p>
+      <div class="math-display small">
+        \[
+        U=\frac12\left(\mathbf a w+i\mathbf b\langle |\nabla|\rangle^{-1}w_t\right),
+        \qquad
+        A=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+        \]
+      </div>
+      <p class="small fragment fade-up">Then KG becomes a first-order half-wave system:</p>
+      <div class="math-display small fragment fade-up">
+        \[
+        iU_t-A \langle |\nabla|\rangle U-\mathcal M(U)- \sum_{k=1}^{K} \mathcal N_k(U)=0.
+        \]
+      </div>
+      <p class="tiny muted fragment fade-up">\(\mathcal{M}(U) = \frac{\mu_1 - 1}{2}[\langle |\nabla|\rangle^{-1}({\bf a}\cdot U)]{\bf b}\) and \(\mathcal{N}_k(U) = -\frac{\nu_{k}}{2}[\langle |\nabla|\rangle^{-1}|{\bf a}\cdot U|^{\alpha_k} ({\bf a}\cdot U)]{\bf b}\).</p>
+    </div>
+    <span>
+      <div class="glass fragment fade-up">
+      <div class="math-display small">
+        \[
+        \mathcal{X}_d=\left\{\begin{aligned}
+        & u\in H^{\frac{3}{2}+}(\mathbb{R},\C^d):\\
+        &\langle x\rangle^n u\in L^{\infty}(\mathbb{R},\C^d), \\
+        &\langle x\rangle^n \langle |\nabla|\rangle^{\frac{3}{2}+}u\in L^2(\mathbb{R},\C^d),
+        \end{aligned}\right.
+        \]
+      </div>
+    </div>
+    <div class="callout fragment fade-up small" style="margin-top:15px">
+      The trick here is using pseudo-differential operators and the same fractional weight tricks from the NLS case on the transformed half-wave system.
+    </div>
+    <div class="callout good fragment fade-up small" style="margin-top:15px">
+      We can then reverse the transformation and obtain LWP in a weak sense.
+    </div>
+    </span>
+  </div>
+</section>
+<!--
+<section>
+  <span class="kicker">KG deviations</span>
+  <h2>The KG space and what changes</h2>
+  <div class="theorem-box">
+    <p class="small">For \(n>1/2\) and \(d=1,2\), the current one-dimensional space is</p>
+    <div class="math-display small">
+      \[
+      \X_d=\left\{U\in H^{3/2+}(\R;\C^d):
+      \la x\ra^nU\in L^\infty,
+      \quad
+      \la x\ra^n\la D\ra^{3/2+}U\in L^2
+      \right\},
+      \]
+      \[
+      \inf_x\la x\ra^n|\mathbf a\cdot U(x)|\geq\lambda>0.
+      \]
+    </div>
+  </div>
+  <div class="layout-3" style="margin-top:20px">
+    <div class="mini-card fragment fade-up"><h3>Linear flow</h3><p class="small">Use \(e^{\mp it\la D\ra}\), not Schrödinger. Fractional weights move through frequency-space estimates.</p></div>
+    <div class="mini-card fragment fade-up"><h3>Nonlinearity</h3><p class="small">\(\la D\ra^{-1}\) sits inside the nonlinearity, so fractional Leibniz and pseudodifferential commutators are central.</p></div>
+    <div class="mini-card fragment fade-up"><h3>Uniqueness</h3><p class="small">Standard \(L^2\) mass is unavailable; uniqueness uses a positive modified charge estimate.</p></div>
+  </div>
+  <div class="footer-note">Work in progress with O. Riaño and S. Roudenko.</div>
+</section>-->
+
+<section class="section-slide">
+  <div class="wavefield"><span style="--delay:0s"></span><span style="--delay:1.2s"></span><span style="--delay:2.4s"></span></div>
+  <div style="height:86%;display:grid;align-content:center">
+    <span class="kicker">dynamics</span>
+    <h1>Numerical dynamics</h1>
+    <p class="muted" style="max-width:820px">The following slides keep the same figure filenames as your current talk. Missing image files show placeholders; no numerical figures are generated here.</p>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">numerical setup</span>
+  <h2>Questions for combined nonlinearities</h2>
+  <div class="layout-2">
+    <div>
+      <div class="math-display small">
+        \[
+        iu_t+u_{xx}+\epsilon_1|u|^{\alpha_1}u+
+        \epsilon_2|u|^{\alpha_2}u=0.
+        \]
+        \[
+        u(x,t)=e^{i\omega t}Q(x)
+        \quad\Rightarrow\quad
+        -\omega Q+Q''+\epsilon_1Q^{\alpha_1+1}+\epsilon_2Q^{\alpha_2+1}=0.
+        \]
+      </div>
+      <p class="small">Initialize with \(u_0=AQ\) and vary \(A\).</p>
+    </div>
+    <div class="layout-2" style="gap:14px">
+      <div class="mini-card fragment fade-up"><h3>Monitor</h3><p class="small">profiles, \(L^\infty\), oscillations, dispersion, concentration</p></div>
+      <div class="mini-card fragment fade-up"><h3>Combined effect</h3><p class="small">the ground-state threshold picture can become much richer</p></div>
+      <div class="mini-card fragment fade-up"><h3>Low powers</h3><p class="small">connects directly to weighted non-vanishing theory</p></div>
+      <div class="mini-card fragment fade-up"><h3>Quadratic phase</h3><p class="small">tests the sign and size suggested by global theory</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="kicker" style="display: inline-block;">Numerical Simulations</span>
+  <h3 style="display: inline-block;">\(-|u|^{1/9}u+|u|^{7/9}u\)</h3>
+  <div class="figure-grid cols-3">
+    <figure class="figure-tile " data-file="Oscillations/a1_1over9_a2_7over9_eps1_-1_eps2_1_omeg_02_A09.png"><img src="Oscillations/a1_1over9_a2_7over9_eps1_-1_eps2_1_omeg_02_A09.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile" data-file="Oscillations/a1_1over9_a2_7over9_eps1_-1_eps2_1_omeg_02_A1.png"><img src="Oscillations/a1_1over9_a2_7over9_eps1_-1_eps2_1_omeg_02_A1.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile" data-file="Oscillations/a1_1over9_a2_7over9_eps1_-1_eps2_1_omeg_02_A105.png"><img src="Oscillations/a1_1over9_a2_7over9_eps1_-1_eps2_1_omeg_02_A105.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile" data-file="Oscillations/Linf_a1_1over9_a2_7over9_eps1_-1_eps2_1_omeg_02_A09.png"><img src="Oscillations/Linf_a1_1over9_a2_7over9_eps1_-1_eps2_1_omeg_02_A09.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile" data-file="Oscillations/Linf_a1_1over9_a2_7over9_eps1_-1_eps2_1_omeg_02_A1.png"><img src="Oscillations/Linf_a1_1over9_a2_7over9_eps1_-1_eps2_1_omeg_02_A1.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile" data-file="Oscillations/Linf_a1_1over9_a2_7over9_eps1_-1_eps2_1_omeg_02_A105.png"><img src="Oscillations/Linf_a1_1over9_a2_7over9_eps1_-1_eps2_1_omeg_02_A105.png" alt=""><div class="placeholder"></div></figure>
+  </div>
+  <div class="figure-caption">\(u_0=AQ\), \(\omega=0.2\), \(A=0.9,1,1.05\).</div>
+</section>
+
+<section>
+  <span class="kicker">Numerical Simulations</span>
+  <h2>\(|u|^{4}u+|u|^{8}u\)</h2>
+  <div class="figure-grid cols-3">
+    <figure class="figure-tile tall" data-file="Oscillations/Linf_a1_4_a2_8_eps1_1_eps2_1_omeg_01_A09.png"><img src="Oscillations/Linf_a1_4_a2_8_eps1_1_eps2_1_omeg_01_A09.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile tall" data-file="Oscillations/Linf_a1_4_a2_8_eps1_1_eps2_1_omeg_01_A1.png"><img src="Oscillations/Linf_a1_4_a2_8_eps1_1_eps2_1_omeg_01_A1.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile tall" data-file="Oscillations/Linf_a1_4_a2_8_eps1_1_eps2_1_omeg_01_A11.png"><img src="Oscillations/Linf_a1_4_a2_8_eps1_1_eps2_1_omeg_01_A11.png" alt=""><div class="placeholder"></div></figure>
+  </div>
+  <div class="figure-caption">\(u_0=AQ\), \(\omega=0.1\), \(A=0.9,1,1.1\).</div>
+  
+</section>
+
+<section>
+  <span class="kicker">Numerical Simulations</span>
+  <h2>\(|u|^{3}u+|u|^{6}u\)</h2>
+  <div class="figure-grid cols-4">
+    <figure class="figure-tile tall" data-file="Oscillations/Linf_a1_3_a2_6_eps1_1_eps2_1_omeg_01_A09.png"><img src="Oscillations/Linf_a1_3_a2_6_eps1_1_eps2_1_omeg_01_A09.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile tall" data-file="Oscillations/Linf_a1_3_a2_6_eps1_1_eps2_1_omeg_01_A099.png"><img src="Oscillations/Linf_a1_3_a2_6_eps1_1_eps2_1_omeg_01_A099.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile tall" data-file="Oscillations/Linf_a1_3_a2_6_eps1_1_eps2_1_omeg_01_A101.png"><img src="Oscillations/Linf_a1_3_a2_6_eps1_1_eps2_1_omeg_01_A101.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile tall" data-file="Oscillations/Linf_a1_3_a2_6_eps1_1_eps2_1_omeg_01_A102.png"><img src="Oscillations/Linf_a1_3_a2_6_eps1_1_eps2_1_omeg_01_A102.png" alt=""><div class="placeholder"></div></figure>
+  </div>
+  <div class="figure-caption">\(u_0=AQ\), \(\omega=0.1\), \(A=0.9,0.99,1.01,1.02\).</div>
+  <div class="callout fragment fade-up small" style="margin-top:20px">This supports orbital stability result by Kfouri-Le Coz-Tsai '22!</div>
+</section>
+
+<section>
+  <span class="kicker">Numerical Simulations</span>
+  <h2>The exponential nonlinearity with different initial data</h2>
+  <div class="layout-2 narrow-left">
+    <div>
+      <div class="math-display small">
+        \[
+        iu_t+u_{xx}+\epsilon e^{|u|}u=0,
+        \qquad
+        u_0(x)=e^{ibx^2/4}P(x).
+        \]
+      </div>
+      <div class="callout blue fragment fade-up small" style="margin-top:30px">Positive phase tends to spread; the opposite sign supports blow-up.</div>
+    </div>
+    <div>
+      <div class="figure-grid cols-2">
+        <figure class="figure-tile tall" data-file="Exp/exp_polynomial_eps1_A2_5_b4_n2.png"><img src="Exp/exp_polynomial_eps1_A2_5_b4_n2.png" alt=""><div class="placeholder"></div></figure>
+        <figure class="figure-tile tall" data-file="Exp/Linf_exp_polynomial_eps1_A2_5_b4_n2.png"><img src="Exp/Linf_exp_polynomial_eps1_A2_5_b4_n2.png" alt=""><div class="placeholder"></div></figure>
+      </div>
+      <div class="figure-caption">\(b=\pm4\), \(P(x)=2.5/(1+x^2)^2\).</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">Numerical Simulations</span>
+  <h2>The exponential nonlinearity with different initial data</h2>
+  <div class="figure-grid cols-2">
+    <figure class="figure-tile tall" data-file="Exp/expABS_ep005_Aexp_b_posneg075_tm1_3162_dt1eneg5_N14.png"><img src="Exp/expABS_ep005_Aexp_b_posneg075_tm1_3162_dt1eneg5_N14.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile tall" data-file="Exp/expABS_ep005_Aexp_b_posneg075_tm1_3162_dt1eneg5_N14_Linf.png"><img src="Exp/expABS_ep005_Aexp_b_posneg075_tm1_3162_dt1eneg5_N14_Linf.png" alt=""><div class="placeholder"></div></figure>
+  </div>
+  <div class="figure-caption">Where \(u_0(x) = e^{ibx^2/4}Q(x)\) for \(b=0.75\) and \(b=-0.75\).</div>
+  <div class="callout danger fragment fade-up small" style="margin-top:18px">Note here the intitial data is a numerically obtained <span class="gold">ground state</span> solution.</div>
+</section>
+
+<section class="section-slide">
+  <div class="wavefield"><span style="--delay:0s"></span><span style="--delay:1.3s"></span><span style="--delay:2.6s"></span></div>
+  <div style="height:86%;display:grid;align-content:center">
+    <span class="kicker">virial analysis</span>
+    <h1>Finite-time blow-up criteria</h1>
+    <p class="muted" style="max-width:800px">The combined terms change the sign structure of the virial identity and create new positive-energy mechanisms.</p>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">Background</span>
+  <h2>Blow-up via the virial identity</h2>
+  <div class="glass">
+    <h3>Single power</h3>
+    <div class="math-display small">
+      \[
+      V[u](t)=\int_{\R}x^2|u(x,t)|^2\,dx,
+      \]
+      \[
+      V_{tt}=2(5-p)\norm{u_x}_{L^2}^2+4(p-1)E[u].
+      \]
+    </div>
+  </div>
+  <div class="callout fragment fade-up small" style="margin-top:20px">
+    <p>Case 1: \(p\geq5\), \(E\lt0\): blow-up is direct.</p>
+  </div>
+  <p class="small muted fragment fade-up" style="margin-top:5px"> (Glassey '77, Vlasov-Petrishev-Talanov '71) </p>
+  <div class="callout fragment fade-up small" style="margin-top:10px">
+    <p>Case 2: \(p>5\), \(E>0\): more work is needed.</p>
+  </div>
+  <p class="small muted fragment fade-up" style="margin-top:5px"> (Energy-critical: Kenig-Merle '06, Intercritical: Holmer-Roudenko '07, Lushikov '95, Holmer-Platte-Roudenko '10) </p>
+</section>
+
+<section>
+  <span class="kicker">negative energy</span>
+  <h2>Exponential nonlinearity</h2>
+  <div class="layout-2">
+    <div class="formula-card">
+      <h3>Energy</h3>
+      <div class="math-display small">
+        \[
+        E[u]=\frac12\norm{u_x}_{L^2}^2
+        -\sum_{k=0}^{\infty}\frac{1}{(k+2)k!}\|u\|_{L^{k+2}}^{k+2}.
+        \]
+      </div>
+    </div>
+    <div class="formula-card">
+      <h3>Virial identity</h3>
+      <div class="math-display small">
+        \[
+        V_{tt}[u]
+        =8\norm{u_x}_{L^2}^2
+        -4\sum_{k=1}^{\infty}\frac{k}{(k+2)k!}\|u\|_{L^{k+2}}^{k+2}.
+        \]
+      </div>
+    </div>
+  </div>
+  <div class="theorem-box gold fragment fade-up" style="margin-top:22px">
+    <p class="small"><strong>Theorem: exponential blow-up.</strong> Let \(u_0\in H^1(\R)\) have finite variance. If</p>
+    <div class="math-display small">\[E[u_0]+\kappa M[u_0]\lt0,\qquad \kappa\approx14.797,\]</div>
+    <p class="small">then the solution of \(iu_t+u_{xx}+e^{|u|}u=0\) blows up in finite positive time.</p>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">positive energy</span>
+  <h2>Two nonlinear terms</h2>
+  <div class="math-display small">
+    \[
+    \begin{cases}
+    iu_t + u_{xx} - |\epsilon_1||u|^{4}u + |\epsilon_2||u|^{q-1}u = 0 \\
+    u(x,0) = u_0.
+    \end{cases} 
+    \]
+  </div>
+  <div class="formula-card">
+    <h3>Virial identity</h3>
+    <div class="math-display small">
+      \[
+      V_{tt}[u] = 2\left[5- q\right]\| u_x\|_{L^2}^2 + \frac{2|\epsilon_1|}{3}\left[5-q\right]\|u\|_{L^{6}}^{6} +4(q-1)E[u].
+      \]
+    </div>
+  </div>
+  <p class="small fragment fade-up muted"> Through a the change of variables \(V = B^{\frac{1}{\alpha+1}}\) where \(\alpha=\frac{q-5}{8}\) we view this problem through a different lens.</p>
+  <div class="callout fragment fade-up" style="margin-top:10px">
+    <div class="math-display small">\[B_{tt}  \leq  \underbrace{4(\alpha + 1)(q-1)EB^{\frac{\alpha}{\alpha + 1}} - 4\alpha(\alpha + 1) M^2HB^{\frac{\alpha -1}{\alpha + 1}}}_{-\frac{\partial U}{\partial B}},\]</div>
+    <p class="small">where \(H=1+\frac{|\epsilon_1|M^2}{\pi^2}\).</p>
+  </div>
+</section>
+
+<section data-transition="slide-in fade-out">
+  <span class="kicker">positive energy</span>
+  <h2>A mechanical barrier</h2>
+  <div class="layout-2 narrow-right">
+    <div>
+      <p class="small">For the defocusing–focusing double-power equation with \(p=5\), \(q>5\), and \(E>0\)</p>
+      <div class="math-display small">
+        \[
+          B_{tt}  \leq  \underbrace{4(\alpha + 1)(q-1)EB^{\frac{\alpha}{\alpha + 1}} - 4\alpha(\alpha + 1) M^2HB^{\frac{\alpha -1}{\alpha + 1}}}_{-\frac{\partial U}{\partial B}}
+        \]
+        \[
+        \mathcal E_B=\frac12B_t^2+U(B).
+        \]
+      </div>
+      <div class="callout good fragment fade-up">
+      <p class="small">If \(B_0\lt B_{max}\) and \(\mathcal E(0)\lt U(B_{max})\) blow up occurs.</p>
+    </div> 
+    </div>
+    <div class="virial-stage" style="width: 610px; height: 355px;">
+      <svg viewBox="0 0 610 355" role="img" aria-label="Conceptual virial potential barrier" style="width: 100%; height: 100%; overflow: visible;">
+      <!-- Axes lines -->
+      <line x1="58" y1="306" x2="560" y2="306" stroke="rgba(8,30,63,.3)" stroke-width="3"></line>
+      <line x1="78" y1="320" x2="78" y2="46" stroke="rgba(8,30,63,.3)" stroke-width="3"></line>
+    
+      <!-- True Gaussian (Bell-Shaped) Curve -->
+      <path id="gaussianCurve" d="M 80 306 C 180 306, 210 50, 300 50 C 390 50, 420 306, 535 306" fill="none" stroke="#081e3f" stroke-width="7" stroke-linecap="round"></path>
+      <path d="M 80 306 C 180 306, 210 50, 300 50 C 390 50, 420 306, 535 306" fill="none" stroke="#b8975f" stroke-width="3" stroke-dasharray="12 15" stroke-linecap="round"></path>
+    
+      <!-- Center threshold line -->
+      <line x1="300" y1="50" x2="300" y2="306" stroke="rgba(166,53,53,.55)" stroke-width="3" stroke-dasharray="8 9"></line>
+    
+      <!-- Labels -->
+      <text x="276" y="335" fill="#081e3f" font-size="19" font-weight="800">Bmax</text>
+      <text x="38" y="38" fill="#081e3f" font-size="19" font-weight="800">U(B)</text>
+      <text x="535" y="335" fill="#081e3f" font-size="19" font-weight="800">B</text>
+
+      <!-- The Ball (SVG Circle) -->
+      <circle r="8" fill="#b8975f" stroke="#081e3f" stroke-width="1.5">
+        <!-- Native animation driver to follow the path perfectly -->
+        <!--<animateMotion 
+          dur="4s" 
+          repeatCount="indefinite" 
+          calcMode="spline"
+          keyTimes="0; 0.5; 1"
+          keySplines="0.42 0 0.58 1; 0.42 0 0.58 1"
+          path="M 80 306 C 180 306, 210 50, 300 50 C 390 50, 420 306, 535 306" 
+        />-->
+        <animateMotion 
+          dur="2s" 
+          repeatCount="indefinite" 
+          calcMode="spline"
+          keyTimes="0; 0.75 ;1"
+          keySplines="0.42 0 1 1; 0 0 1 1"
+          keyPoints="0.45; 0; 0"
+          path="M 80 306 C 180 306, 210 50, 300 50 C 390 50, 420 306, 535 306" 
+        />
+      </circle>
+      </svg>
+    </div>
+  </div>
+  <div class="footer-note" style="margin-top: 30px;">
+    Conceptual visualization, not numerical data.
+  </div>
+</section>
+
+<section data-transition="fade-in fade-out">
+  <span class="kicker">positive energy</span>
+  <h2>A mechanical barrier</h2>
+  <div class="layout-2 narrow-right">
+    <div>
+      <p class="small">For the defocusing–focusing double-power equation with \(p=5\), \(q>5\), and \(E>0\)</p>
+      <div class="math-display small">
+        \[
+          B_{tt}  \leq  \underbrace{4(\alpha + 1)(q-1)EB^{\frac{\alpha}{\alpha + 1}} - 4\alpha(\alpha + 1) M^2HB^{\frac{\alpha -1}{\alpha + 1}}}_{-\frac{\partial U}{\partial B}}
+        \]
+        \[
+        \mathcal E_B=\frac12B_t^2+U(B).
+        \]
+      </div>
+      <div class="callout good fragment fade-up">
+      <p class="small">If \(B_0\gt B_{max}\), \(\mathcal E(0)\gt U(B_{max})\), and \(B_t\lt 0 \rightarrow\) blow up occurs.</p>
+    </div>
+    </div>
+    <div class="virial-stage" style="width: 610px; height: 355px;">
+      <svg viewBox="0 0 610 355" role="img" aria-label="Conceptual virial potential barrier" style="width: 100%; height: 100%; overflow: visible;">
+      <!-- Axes lines -->
+      <line x1="58" y1="306" x2="560" y2="306" stroke="rgba(8,30,63,.3)" stroke-width="3"></line>
+      <line x1="78" y1="320" x2="78" y2="46" stroke="rgba(8,30,63,.3)" stroke-width="3"></line>
+    
+      <!-- True Gaussian (Bell-Shaped) Curve -->
+      <path id="gaussianCurve" d="M 80 306 C 180 306, 210 50, 300 50 C 390 50, 420 306, 535 306" fill="none" stroke="#081e3f" stroke-width="7" stroke-linecap="round"></path>
+      <path d="M 80 306 C 180 306, 210 50, 300 50 C 390 50, 420 306, 535 306" fill="none" stroke="#b8975f" stroke-width="3" stroke-dasharray="12 15" stroke-linecap="round"></path>
+    
+      <!-- Center threshold line -->
+      <line x1="300" y1="50" x2="300" y2="306" stroke="rgba(166,53,53,.55)" stroke-width="3" stroke-dasharray="8 9"></line>
+    
+      <!-- Labels -->
+      <text x="276" y="335" fill="#081e3f" font-size="19" font-weight="800">Bmax</text>
+      <text x="38" y="38" fill="#081e3f" font-size="19" font-weight="800">U(B)</text>
+      <text x="535" y="335" fill="#081e3f" font-size="19" font-weight="800">B</text>
+
+      <!-- The Ball (SVG Circle) -->
+      <circle r="8" fill="#b8975f" stroke="#081e3f" stroke-width="1.5">
+        <!-- Native animation driver to follow the path perfectly -->
+        <!--<animateMotion 
+          dur="4s" 
+          repeatCount="indefinite" 
+          calcMode="spline"
+          keyTimes="0; 0.5; 1"
+          keySplines="0.42 0 0.58 1; 0.42 0 0.58 1"
+          path="M 80 306 C 180 306, 210 50, 300 50 C 390 50, 420 306, 535 306" 
+        />-->
+        <animateMotion 
+          dur="2s" 
+          repeatCount="indefinite" 
+          calcMode="spline"
+          keyTimes="0; 0.75 ;1"
+          keySplines="0.42 0 1 1; 0 0 1 1"
+          keyPoints="0.60; 0; 0"
+          path="M 80 306 C 180 306, 210 50, 300 50 C 390 50, 420 306, 535 306" 
+        />
+      </circle>
+      </svg>
+    </div>
+  </div>
+  <div class="footer-note" style="margin-top: 30px;">
+    Conceptual visualization, not numerical data.
+  </div>
+</section>
+
+<section data-transition="fade-in slide-out">
+  <span class="kicker">positive energy</span>
+  <h2>A mechanical barrier</h2>
+  <div class="layout-2 narrow-right">
+    <div>
+      <p class="small">For the defocusing–focusing double-power equation with \(p=5\), \(q>5\), and \(E>0\)</p>
+      <div class="math-display small">
+        \[
+          B_{tt}  \leq  \underbrace{4(\alpha + 1)(q-1)EB^{\frac{\alpha}{\alpha + 1}} - 4\alpha(\alpha + 1) M^2HB^{\frac{\alpha -1}{\alpha + 1}}}_{-\frac{\partial U}{\partial B}}
+        \]
+        \[
+        \mathcal E_B=\frac12B_t^2+U(B).
+        \]
+      </div>
+      <div class="callout good fragment fade-up">
+      <p class="small">For \(B_0\gt B_{max}\) if \(\mathcal E(0)\lt U(B_{max})\) or \(B_t\gt0 \rightarrow\) it is unsure.</p>
+    </div>
+    </div>
+    <div class="virial-stage" style="width: 610px; height: 355px;">
+      <svg viewBox="0 0 610 355" role="img" aria-label="Conceptual virial potential barrier" style="width: 100%; height: 100%; overflow: visible;">
+      <!-- Axes lines -->
+      <line x1="58" y1="306" x2="560" y2="306" stroke="rgba(8,30,63,.3)" stroke-width="3"></line>
+      <line x1="78" y1="320" x2="78" y2="46" stroke="rgba(8,30,63,.3)" stroke-width="3"></line>
+    
+      <!-- True Gaussian (Bell-Shaped) Curve -->
+      <path id="gaussianCurve" d="M 80 306 C 180 306, 210 50, 300 50 C 390 50, 420 306, 535 306" fill="none" stroke="#081e3f" stroke-width="7" stroke-linecap="round"></path>
+      <path d="M 80 306 C 180 306, 210 50, 300 50 C 390 50, 420 306, 535 306" fill="none" stroke="#b8975f" stroke-width="3" stroke-dasharray="12 15" stroke-linecap="round"></path>
+    
+      <!-- Center threshold line -->
+      <line x1="300" y1="50" x2="300" y2="306" stroke="rgba(166,53,53,.55)" stroke-width="3" stroke-dasharray="8 9"></line>
+    
+      <!-- Labels -->
+      <text x="276" y="335" fill="#081e3f" font-size="19" font-weight="800">Bmax</text>
+      <text x="38" y="38" fill="#081e3f" font-size="19" font-weight="800">U(B)</text>
+      <text x="535" y="335" fill="#081e3f" font-size="19" font-weight="800">B</text>
+
+      <!-- The Ball (SVG Circle) -->
+      <circle r="8" fill="#b8975f" stroke="#081e3f" stroke-width="1.5">
+        <!-- Native animation driver to follow the path perfectly -->
+        <!--<animateMotion 
+          dur="4s" 
+          repeatCount="indefinite" 
+          calcMode="spline"
+          keyTimes="0; 0.5; 1"
+          keySplines="0.42 0 0.58 1; 0.42 0 0.58 1"
+          path="M 80 306 C 180 306, 210 50, 300 50 C 390 50, 420 306, 535 306" 
+        />-->
+        <animateMotion 
+          dur="2.5s" 
+          repeatCount="indefinite" 
+          calcMode="spline"
+          keyTimes="0; 0.35; 0.8; 1"
+          keySplines="0 0 0.5 1; 0.5 0 1 1; 0 0 1 1"
+          keyPoints="0.65; 0.55; 1; 1"
+          path="M 80 306 C 180 306, 210 50, 300 50 C 390 50, 420 306, 535 306" 
+        />
+      </circle>
+      </svg>
+    </div>
+  </div>
+  <div class="footer-note" style="margin-top: 30px;">
+    Conceptual visualization, not numerical data.
+  </div>
+</section>
+
+<section>
+  <span class="kicker">positive energy</span>
+  <h2>Blow-up criterion</h2>
+  <div class="theorem-box gold">
+    <p class="small"><strong>Theorem: \(p=5\lt q\), \(\epsilon_1\lt0\lt\epsilon_2\).</strong> Let \(u_0\in H^1(\R)\) have finite variance and suppose \(E[u_0]>0\). Define</p>
+    <div class="math-display small">
+      \[
+      H=1+\frac{|\epsilon_1|M^2}{\pi^2},
+      \qquad
+      X_0=\frac{8(q-1)E V[u_0]}{(q-5)M^2H}.
+      \]
+      \[
+      \frac{V_t(0)}{2M\sqrt H}
+      \lt\sqrt{\frac{q-5}{q-1}}\,f(X_0)
+      \quad\Longrightarrow\quad
+      \text{finite-time blow-up}.
+      \]
+    </div>
+    <div class="math-display tiny">
+      \[
+      f(X)=
+      \begin{cases}
+      \sqrt{\frac{4}{q-5}X^{-(q-5)/4}+X-\frac{q-1}{q-5}},&0\lt X\lt1,\\
+      -\sqrt{\frac{4}{q-5}X^{-(q-5)/4}+X-\frac{q-1}{q-5}},&X\geq1.
+      \end{cases}
+      \]
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">positive-energy examples</span>
+  <h2>Gaussian and algebraic data</h2>
+  <div class="layout-2">
+    <div class="mini-card">
+      <h3>Gaussian: \(u_0=Ae^{-x^2}\)</h3>
+      <div class="math-display tiny">
+        \[
+        M=\frac{A^2\sqrt\pi}{\sqrt2},\quad
+        V=\frac{A^2\sqrt\pi}{2^{5/2}},
+        \]
+        \[
+        E=\frac{A^2\sqrt\pi}{2\sqrt2}+
+        \frac{A^6\sqrt\pi}{6\sqrt6}-
+        \frac{A^8\sqrt\pi}{16\sqrt2}.
+        \]
+      </div>
+    </div>
+    <div class="mini-card">
+      <h3>Algebraic: \(u_0=\frac{A}{(1+x^2)}\)</h3>
+      <div class="math-display tiny">
+        \[
+        M=V=\frac{A^2\pi}{2},
+        \]
+        \[
+        E=\frac{A^2\pi}{8}\left(1+\frac{21A^4}{64}-\frac{429A^6}{2048}\right).
+        \]
+      </div>
+    </div>
+  </div>
+  <div class="figure-grid cols-4" style="margin-top:18px">
+    <figure class="figure-tile" data-file="example_positiveE_gaussian.png"><img src="example_positiveE_gaussian.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile" data-file="Corrected_PosE_Gaussain_Criteria_2.png"><img src="Corrected_PosE_Gaussain_Criteria_2.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile" data-file="example_positiveE_weighted.png"><img src="example_positiveE_weighted.png" alt=""><div class="placeholder"></div></figure>
+    <figure class="figure-tile" data-file="Corrected_PosE_Weighted_Criteria.png"><img src="Corrected_PosE_Weighted_Criteria.png" alt=""><div class="placeholder"></div></figure>
+  </div>
+</section>
+<!--
+<section>
+  <span class="kicker">takeaways</span>
+  <h2>Main messages</h2>
+  <div class="message-list">
+    <div class="message fragment fade-up"><div class="num">1</div><div>The one-dimensional space \(\X\) is independent of the power \(\alpha\). This is the key departure from the reference construction.</div></div>
+    <div class="message fragment fade-up"><div class="num">2</div><div>Explicit \(\alpha_k\)-dependent constants convert single-power estimates into a theory for finite and infinite combined nonlinearities.</div></div>
+    <div class="message fragment fade-up"><div class="num">3</div><div>The pseudoconformal transform turns local control into global existence and scattering for large positive quadratic phase and powers \(\alpha_k>2\).</div></div>
+    <div class="message fragment fade-up"><div class="num">4</div><div>Higher dimensions and KG keep the architecture but require new weight ladders, pseudodifferential analysis, and more delicate uniqueness.</div></div>
+    <div class="message fragment fade-up"><div class="num">5</div><div>Numerics reveal richer dynamics, while virial methods give rigorous negative- and positive-energy blow-up criteria.</div></div>
+  </div>
+</section>
+-->
+<section class="title-slide">
+  <div class="wavefield"><span style="--delay:0s"></span><span style="--delay:1.2s"></span><span style="--delay:2.4s"></span></div>
+  <div style="height:86%;display:grid;place-items:center;text-align:center">
+    <div>
+      <h1>Thank you</h1>
+      <p class="muted">Questions?</p>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+<script src="vendor/reveal/reveal.js"></script>
+<script src="assets/deck.js"></script>
+</body>
+</html>

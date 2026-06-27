@@ -1,0 +1,4 @@
+Place these blow-up criterion/profile figures next to index.html if you want them to display:
+- Corrected_PosE_Gaussain_Criteria_2.png
+- example_positiveE_weighted.png
+- Corrected_PosE_Weighted_Criteria.png
