@@ -85,7 +85,7 @@
       
       <!-- List remains centered as a block, but text aligns left for readability -->
       <ul class="clean small" style="display: flex; flex-direction: column; gap: 24px; text-align: left; max-width: 85%; margin: 0 auto;">
-        <li class="fragment fade-up">LWP/GWP in a Sobolev space for single and two nonlinear terms (Ohta '95, Tao-Visan-Zhang '07, Pocovnicu et al. '12, Carles-Sparber '21, ...)</li>
+        <li class="fragment fade-up">LWP/GWP in a Sobolev space for single and two nonlinear terms (Ohta '95, Tao-Visan-Zhang '07, Pocovnicu et al. '12, Carles-Sparber '21, Kfouri-Le Coz-Tsai '22, ...)</li>
         <li class="fragment fade-up">LWP/GWP in weighted Sobolev spaces Casenave-Naumkin '16 allowing for small power nonlinearity in any dimension</li>
       </ul>
     </div>
@@ -141,7 +141,7 @@
 
 <section>
   <span class ="kicker">Controlling the weighted linear flow</span>
-  <h2>Two different approaches</h2>
+  <h2>Integer vs. non-integer weights</h2>
   <div class="layout-2">
     <div class="glass fragment fade-up">
       <h3><span class="gold">Casenave-Naumkin</span> method:</h3>
@@ -183,7 +183,7 @@
   <h2>Construction of the weighted space \(\mathcal{X}\)</h2>
   <p class="small muted fragment fade-up"> The computations on the linear flow lead to the construction of the weighted space.</p>
   <div class="layout-2" style="margin-top:10px;">
-    <div class="glass fragment fade-up" style="height: fit-content; height: -moz-fit-content; min-height: auto; padding-bottom: 10px; width:auto;">
+    <div class="glass fragment fade-up" style="height: fit-content; height: -moz-fit-content; min-height: 200x; padding-bottom: 10px; width:auto;">
       <div class="math-display small" >
         \[
         \X=\left\{
@@ -201,7 +201,8 @@
     <div class="layer-stack">
       <div class="layer fragment fade-up">\({n > 0}, \; r\geq 3, \, \, \text{ and }\, \, M \geq  n+ r.\)</div>
       <div class="layer fragment fade-up">
-        <div class = "math-display small"> \[\|u\|_{\mathcal{X}} = \|\langle x \rangle^n u\|_{L^{\infty}} + \sum_{k=1}^{r} \|\langle x \rangle^{n} \partial_{x}^{k} u\|_{L^2} + {\sum_{k=r+1}^{M} \|\partial_{x}^{k} u\|_{L^2}}\]</div>
+        <div class = "math-display"> \[\|u\|_{\mathcal{X}} = \|\langle x \rangle^n u\|_{L^{\infty}} + \sum_{k=1}^{r} \|\langle x \rangle^{n} \partial_{x}^{k} u\|_{L^2} + {\sum_{k=r+1}^{M} \|\partial_{x}^{k} u\|_{L^2}}\]</div>
+        <p class="small muted fragment fade-up">Note when \( n \gt \frac{1}{2} \) the last term in the norm can be replaced by  \(\|J^M u\|_{L^2}\).</p>
       </div>
     </div>
   </div>  
@@ -682,7 +683,7 @@
   <span class="kicker">global theorem</span>
   <h2>Global well-posedness and scattering</h2>
   <div class="theorem-box">
-    <p class="small"><strong style="font-weight: bold;">Theorem (Riaño–Rodriguez–Roudenko '26):</strong> <br>Assume \(n>1/2\), \(\alpha_k>2\) for every \(k\).</p>
+    <p class="small"><strong style="font-weight: bold;">Theorem (Riaño–ADR–Roudenko '26):</strong> <br>Assume \(n>1/2\), \(\alpha_k>2\) for every \(k\).</p>
     <div class="math-display small">
       \[
         \sum_{k=0}^{\infty}\sum_{0\leq \beta \leq M}\frac{|d_k|}{\alpha_k-2}\big(1+C(\alpha_k,\beta))(R_0^{|\alpha_k-2\beta|}+|\alpha_k-2\beta|R_0^{|\alpha_k-2\beta-1|})<\infty.
@@ -716,6 +717,18 @@
     <span class="kicker">work in progress</span>
     <h1>Extensions beyond the 1D NLS</h1>
   </div>
+</section>
+
+<section>
+  <span class="kicker">Previous applications</span>
+  <h2>Some examples of applications of this technique to other PDE</h2>
+  <ul class="clean" style="display: flex; flex-direction: column; gap: 24px; text-align: left; max-width: 85%; margin: 0 auto;">
+    <li class="fragment fade-up">KDV : Linares, Miyazaki, and Ponce (2019), Friedman, Ria&ntilde;o, Roudenko, Son, and Yang (2022) </li>
+    <li class="fragment fade-up">Derivative Schr&ouml;dinger: Linares, Ponce, and Santos (2019)</li>
+    <li class="fragment fade-up">Nonlinear Klein–Gordon and Dirac equations: Casenave and Naumkin (2020)</li>
+    <li class="fragment fade-up">Generalized Hartree: Arora, Ria&ntilde;o, and Roudenko (2021)</li>
+    <li class="fragment fade-up">Bi-NLS (4th order NLS): Petrenko, Ria&ntilde;o, and Roudenko (2026)</li>       
+  </ul>
 </section>
 
 <section>
@@ -770,7 +783,7 @@
 
 <section>
   <span class="kicker">The nonlinear Klein–Gordon</span>
-  <h2>The same architecture for the NKG</h2>
+  <h2>The same architecture for the NLKG</h2>
   <div class="layout-2 narrow-left">
     <div>
       <div class="math-display small">
@@ -786,7 +799,7 @@
         A=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
         \]
       </div>
-      <p class="small fragment fade-up">Then KG becomes a first-order half-wave system:</p>
+      <p class="small fragment fade-up">Then NLKG becomes a first-order half-wave system:</p>
       <div class="math-display small fragment fade-up">
         \[
         iU_t-A \langle |\nabla|\rangle U-\mathcal M(U)- \sum_{k=1}^{K} \mathcal N_k(U)=0.
@@ -817,8 +830,8 @@
 </section>
 <!--
 <section>
-  <span class="kicker">KG deviations</span>
-  <h2>The KG space and what changes</h2>
+  <span class="kicker">NLKG deviations</span>
+  <h2>The NLKG space and what changes</h2>
   <div class="theorem-box">
     <p class="small">For \(n>1/2\) and \(d=1,2\), the current one-dimensional space is</p>
     <div class="math-display small">
@@ -846,7 +859,7 @@
   <div class="wavefield"><span style="--delay:0s"></span><span style="--delay:1.2s"></span><span style="--delay:2.4s"></span></div>
   <div style="height:86%;display:grid;align-content:center">
     <span class="kicker">dynamics</span>
-    <h1>Numerical dynamics</h1>
+    <h1>Dynamics of solutions for cNLS</h1>
   </div>
 </section>
 
