@@ -274,7 +274,7 @@
       
       <div class="math-display fragment current-visible" data-fragment-index="1">
         \[
-        A \lesssim \|u\|_{L^{\infty}}^{\alpha}\|\langle x \rangle^n \partial_x^k u\|_{L^2}
+        A \lesssim \|\la x \ra^{-n\alpha}\|_{L^{\infty}} \|\la x \ra^n u\|_{L^{\infty}}^{\alpha}\|\langle x \rangle^n \partial_x^{\beta} u\|_{L^2}
         \]
       </div>
       
@@ -778,7 +778,8 @@
       </div>
     </div>
   </div>
-  <div class="footer-note">Work in progress with I. Petrenko, O. Riaño, and S. Roudenko.</div>
+  <p class="small muted fragment fade-up" style="margin-top:15px">Note, within the higher dimensional extension we also include the case of the bi-NLS with combined nonlinearities.</p>
+  <div class="footer-note" style="margin-top:20px">Work in progress with I. Petrenko, O. Riaño, and S. Roudenko.</div>
 </section>
 
 <section>
@@ -827,7 +828,29 @@
     </div>
     </span>
   </div>
+  <div class="footer-note">Work in progress with O. Riaño and S. Roudenko.</div>
 </section>
+
+<section>
+  <span class="kicker">Goals</span>
+  <h2>What we hope to achieve</h2>
+  <div class="math-display small">
+        \[
+        w_{tt}-w_{xx}+\mu_1 w+\sum_{k=1}^{K}\nu_k|w|^{\alpha_k}w=0.
+        \]
+  </div>
+  <div class="glass fragment fade-up">
+    <h3>Goals:</h3>
+    <ul class="clean" style="display: flex; flex-direction: column; gap: 24px; text-align: left; max-width: 85%; margin: 0 auto;">
+    <li class="small">With combined nonlinearities, we cover the cases present in Scalar Field Theory, including \(\phi^4\) and \(\phi^6\) models.</li>
+    <li class="small">Lower regularity well-posedness for a larger class of nonlinearities. </li>
+    <li class="small">An extension of the established Casenave-Naumkin result to fractional weights and derivatives.</li>
+    <li class="small">We first investigate in 1D and then extend to higher dimensions.</li>     
+  </ul>
+  </div>
+  <div class="footer-note" style="margin-top:20px">Work in progress with O. Riaño and S. Roudenko.</div>
+</section>
+
 <!--
 <section>
   <span class="kicker">NLKG deviations</span>
@@ -993,7 +1016,7 @@
   <div class="callout fragment fade-up small" style="margin-top:10px">
     <p>Case 2: \(p>5\), \(E>0\): more work is needed.</p>
   </div>
-  <p class="small muted fragment fade-up" style="margin-top:5px"> (Energy-critical: Kenig-Merle '06, Intercritical: Holmer-Roudenko '07, Lushikov '95, Holmer-Platte-Roudenko '10) </p>
+  <p class="small muted fragment fade-up" style="margin-top:5px"> (Energy-critical: Kenig-Merle '06, Intercritical: Holmer-Roudenko '07, Lushnikov '95, Holmer-Platte-Roudenko '10) </p>
 </section>
 
 <section>
@@ -1021,7 +1044,7 @@
     </div>
   </div>
   <div class="theorem-box gold fragment fade-up" style="margin-top:22px">
-    <p class="small"><strong>Theorem: exponential blow-up.</strong> Let \(u_0\in H^1(\R)\) have finite variance. If</p>
+    <p class="small"><strong>Exponential Blow-up Theorem (ADR, Stud. Appl. Math - forthcoming): </strong>Let \(u_0\in H^1(\R)\) have finite variance. If</p>
     <div class="math-display small">\[E[u_0]+\kappa M[u_0]\lt0,\qquad \kappa\approx14.797,\]</div>
     <p class="small">then the solution of \(iu_t+u_{xx}+e^{|u|}u=0\) blows up in finite positive time.</p>
   </div>
