@@ -448,22 +448,6 @@
     </div>
 </section>
 
-<section>
-  <span class="kicker">The differences</span>
-  <h2>Where our work departs from the CN technique</h2>
-  <table class="compare-table">
-    <thead><tr><th></th><th>Reference</th><th>Our work</th></tr></thead>
-    <tbody>
-      <tr class="fragment fade-up"><td>Nonlinearity</td><td>one fixed power \(\lambda |u|^\alpha u\)</td><td class="win">finite or infinite \(\sum_k d_k |u|^{\alpha_k}u\)</td></tr>
-      <tr class="fragment fade-up"><td>Weight</td><td>integer \(n\) constrained by \(\alpha\)</td><td class="win">fractional \(n>0\), chosen independently of all \(\alpha_k\)</td></tr>
-      <tr class="fragment fade-up"><td>Space Definition</td><td>Many derivatives in weighted \(L^\infty\)</td><td class="win">only \(\la x\ra^n u\in L^\infty\); derivatives mainly in weighted \(L^2\)</td></tr>
-      <tr class="fragment fade-up"><td>Space Dependence</td><td>Space depends on \(\alpha\) but applicable to many dimensions</td><td class="win">Depends on Sobolev embedding but not on nonlinear power.</td></tr>
-    </tbody>
-  </table>
-  <div class="callout danger fragment fade-up">
-    Our adjustments allow us to track constants and provide a uniform space and well-posedness result for a wide range of nonlinearities, but extending to higher dimensions can be difficult. 
-  </div>
-</section>
 <!-- 
 <section>
   <span class="kicker">reference architecture</span>
@@ -751,6 +735,23 @@
       \sup_{t\geq0}(1+t)^{1/2}\norm{u(t)}_{L^\infty}\lt\infty.
       \]
     </div>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">The differences</span>
+  <h2>Where our work departs from the CN technique</h2>
+  <table class="compare-table">
+    <thead><tr><th></th><th>Reference</th><th>Our work</th></tr></thead>
+    <tbody>
+      <tr class="fragment fade-up"><td>Nonlinearity</td><td>one fixed power \(\lambda |u|^\alpha u\)</td><td class="win">finite or infinite \(\sum_k d_k |u|^{\alpha_k}u\)</td></tr>
+      <tr class="fragment fade-up"><td>Weight</td><td>integer \(n\) constrained by \(\alpha\)</td><td class="win">fractional \(n>0\), chosen independently of all \(\alpha_k\)</td></tr>
+      <tr class="fragment fade-up"><td>Space Definition</td><td>Many derivatives in weighted \(L^\infty\)</td><td class="win">only \(\la x\ra^n u\in L^\infty\); derivatives mainly in weighted \(L^2\)</td></tr>
+      <tr class="fragment fade-up"><td>Space Dependence</td><td>Space depends on \(\alpha\) but applicable to many dimensions</td><td class="win">Depends on Sobolev embedding but not on nonlinear power.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout danger fragment fade-up">
+    Our adjustments allow us to track constants and provide a uniform space and well-posedness result for a wide range of nonlinearities, but extending to higher dimensions can be difficult. 
   </div>
 </section>
 
