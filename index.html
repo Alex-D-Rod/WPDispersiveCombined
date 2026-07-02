@@ -86,7 +86,7 @@
       <!-- List remains centered as a block, but text aligns left for readability -->
       <ul class="clean small" style="display: flex; flex-direction: column; gap: 24px; text-align: left; max-width: 85%; margin: 0 auto;">
         <li class="fragment fade-up">LWP/GWP in a Sobolev space for single and two nonlinear terms (Ohta '95, Tao-Visan-Zhang '07, Pocovnicu et al. '12, Carles-Sparber '21, Kfouri-Le Coz-Tsai '22, ...)</li>
-        <li class="fragment fade-up">LWP/GWP in weighted Sobolev spaces Casenave-Naumkin '16 allowing for small power nonlinearity in any dimension</li>
+        <li class="fragment fade-up">LWP/GWP in weighted Sobolev spaces (Casenave-Naumkin '16) allowing for small power nonlinearity in any dimension</li>
       </ul>
     </div>
   </div>
@@ -136,7 +136,9 @@
       \inf_{x\in \mathbb{R}} \la x\ra^n \abs{u(t,x)} \geq \inf_{x\in \mathbb{R}} \la x\ra^n \abs{u_0(x)} - t \norm{\la x\ra^n \partial_x^2 u}_{L^\infty} \geq \lambda - t\norm{\la x\ra^n \partial_x^2 u}_{H^1}.
       \]
   </div>
-  <p class="small muted fragment fade-up">Let \(u = e^{it\partial_x^2}u_0\), then if we control \(\norm{\la x\ra^n e^{it\partial_x^2}\partial_x^2 u_0}_{H^1}\) we can maintain the lower bound for finite time.</p>
+  <p class="small muted fragment fade-up">Let \(u = e^{it\partial_x^2}u_0\), then if we control \(\norm{\la x\ra^n e^{it\partial_x^2}\partial_x^2 u_0}_{H^1}\) we can maintain the lower bound for small time.</p>
+  </div>
+  <p class="small muted fragment fade-up">Q: How can we commute the weight and operator?</p>
 </section>
 
 <section>
@@ -148,7 +150,7 @@
       <p class="small">Use integer weights and an induction to show</p>
       <div class="math-display small">
         \[
-        \norm{\la x \ra^n e^{it\partial_x^2}\partial_x^\beta u_0(x)}_{L^2} \leq \sum_{k=0}^\beta \norm{\la x \ra^{n-k} \partial_x^k u_0(x)}_{L^2}.
+        \norm{\la x \ra^n e^{it\partial_x^2}\partial_x^\beta u_0(x)}_{L^2} \lesssim \sum_{k=0}^\beta \norm{\la x \ra^{n-k} \partial_x^k u_0(x)}_{L^2}.
         \]
       </div>
     </div>
@@ -179,11 +181,52 @@
 </section>
 
 <section>
+  <span class="kicker">Linear Estimates</span>
+  <h2>What do our estimates tell us?</h2>
+  <div class="callout" style="margin-top:10px">
+    <p class="small">Starting from the FTC,</p>
+    <div class="math-display small">
+      \[
+      e^{it \partial_x^2}f=f+i\int_0^t e^{i s \partial_x^2}\partial_x^2 f \, ds.
+      \]
+    </div>
+  </div>
+  <div class="callout good fragment fade-up" data-fragment-index="0" style="margin-top:10px">
+    <div class="r-stack">
+      <div class="fragment current-visible" data-fragment-index="0">
+        <p class="small">Multiplying by the weight and taking the \(L^\infty\) norm</p>
+        <div class="math-display small">
+          \[
+          \|\langle x \rangle^n e^{it \partial_x^2}f\|_{L^{\infty}}\leq  \|\langle x \rangle^n f\|_{L^{\infty}}+C\int_0^t \big(\|\langle x \rangle^{n}e^{i s \partial_x^2} \partial_x^2 f\|_{L^\infty}\big)\, ds
+          \]
+        </div>
+      </div>
+      <div class="fragment current-visible" data-fragment-index="1">
+      <p class="small">By the Sobolev embedding</p>
+      <div class="math-display small">
+        \[
+        \|\langle x \rangle^n e^{it \partial_x^2}f\|_{L^{\infty}}\leq  \|\langle x \rangle^n f\|_{L^{\infty}}+C\int_0^t \big(\|\langle x \rangle^{n}e^{i s \partial_x^2} \partial_x^2 f\|_{L^2}+\|\langle x \rangle^{n}e^{i s \partial_x^2} \partial_x^3 f\|_{L^2}\big)\, ds
+        \]
+      </div>
+      </div>
+      <div class="fragment fade-in" data-fragment-index="2">
+      <p class="small">By the previous lemma</p>
+      <div class="math-display small">
+        \[
+        \|\langle x \rangle^n e^{it \partial_x^2}f\|_{L^{\infty}}\leq  |\langle x \rangle^n f\|_{L^{\infty}}+|t|\langle t \rangle^n C\big(\|{J^{n+2} \partial_xf}\|_{L^2}+\sum_{j=1}^3\|\langle x \rangle^{n} \partial_x^j f\|_{L^2}\big)
+        \]
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
   <span class ="kicker">Deciding where our solution lives</span>
   <h2>Construction of the weighted space \(\mathcal{X}\)</h2>
   <p class="small muted fragment fade-up"> The computations on the linear flow lead to the construction of the weighted space.</p>
-  <div class="layout-2" style="margin-top:10px;">
-    <div class="glass fragment fade-up" style="height: fit-content; height: -moz-fit-content; min-height: 200x; padding-bottom: 10px; width:auto;">
+  <div class="layout-2" style="margin-top:5px;">
+    <div class="glass fragment fade-up" style="height: fit-content; height: -moz-fit-content; min-height: 200x; padding-bottom: 20px; width:auto;">
       <div class="math-display small" >
         \[
         \X=\left\{
@@ -202,7 +245,7 @@
       <div class="layer fragment fade-up">\({n > 0}, \; r\geq 3, \, \, \text{ and }\, \, M \geq  n+ r.\)</div>
       <div class="layer fragment fade-up">
         <div class = "math-display"> \[\|u\|_{\mathcal{X}} = \|\langle x \rangle^n u\|_{L^{\infty}} + \sum_{k=1}^{r} \|\langle x \rangle^{n} \partial_{x}^{k} u\|_{L^2} + {\sum_{k=r+1}^{M} \|\partial_{x}^{k} u\|_{L^2}}\]</div>
-        <p class="small muted fragment fade-up">Note when \( n \gt \frac{1}{2} \) the last term in the norm can be replaced by  \(\|J^M u\|_{L^2}\).</p>
+        <p class="small muted">Note when \( n \gt \frac{1}{2} \) the last term in the norm can be replaced by  \(\|J^M u\|_{L^2}\).</p>
       </div>
     </div>
   </div>  
@@ -328,7 +371,7 @@
     </div>
     <div class="math-display fragment current-visible" data-fragment-index="6">
       \[
-      \big(\lambda^{-|\alpha-2k|}+\|u\|_{\mathcal{X}}^{|\alpha-2k|}\big)\| {\la x \ra^{-n\alpha}\|_{L^\infty}\|\la x \ra^{n}\partial_x^{\rho}u}\|_{L^2}\prod_{j=1}^k\|\la x \ra^{n}\partial_{x}^{m_j}\|_{L^\infty}\|\la x \ra^{n}u\partial_{x}^{\ell_{j}-m_j}u\|_{L^\infty}
+      \big(\lambda^{-|\alpha-2k|}+\|u\|_{\mathcal{X}}^{|\alpha-2k|}\big)\| {\la x \ra^{-n\alpha}\|_{L^\infty}\|\la x \ra^{n}\partial_x^{\rho}u}\|_{L^2}\prod_{j=1}^k\|\la x \ra^{n}\partial_{x}^{m_j}u\|_{L^\infty}\|\la x \ra^{n}\partial_{x}^{\ell_{j}-m_j}u\|_{L^\infty}
       \]
     </div>
     <div class="math-display fragment fade-in" data-fragment-index="7">
@@ -414,7 +457,7 @@
       <tr class="fragment fade-up"><td>Nonlinearity</td><td>one fixed power \(\lambda |u|^\alpha u\)</td><td class="win">finite or infinite \(\sum_k d_k |u|^{\alpha_k}u\)</td></tr>
       <tr class="fragment fade-up"><td>Weight</td><td>integer \(n\) constrained by \(\alpha\)</td><td class="win">fractional \(n>0\), chosen independently of all \(\alpha_k\)</td></tr>
       <tr class="fragment fade-up"><td>Space Definition</td><td>Many derivatives in weighted \(L^\infty\)</td><td class="win">only \(\la x\ra^n u\in L^\infty\); derivatives mainly in weighted \(L^2\)</td></tr>
-      <tr class="fragment fade-up"><td>Space Dependence</td><td>dimension-independent high-regularity construction</td><td class="win">Depends on Sobolev embedding but not on nonlinear power.</td></tr>
+      <tr class="fragment fade-up"><td>Space Dependence</td><td>Space depends on \(\alpha\) but applicable to many dimensions</td><td class="win">Depends on Sobolev embedding but not on nonlinear power.</td></tr>
     </tbody>
   </table>
   <div class="callout danger fragment fade-up">
@@ -671,7 +714,7 @@
       </div>
     </div>
   </div>
-  <div class="callout blue fragment fade-up" style="margin-top:18px">
+  <div class="callout blue" style="margin-top:18px">
     \[
     u(x,t)=\frac{1}{(1+bt)^{1/2}}e^{\frac{ibx^2}{4(1+bt)}}
     v\!\left(\frac{x}{1+bt},\frac{t}{1+bt}\right).
@@ -717,18 +760,6 @@
     <span class="kicker">work in progress</span>
     <h1>Extensions beyond the 1D NLS</h1>
   </div>
-</section>
-
-<section>
-  <span class="kicker">Previous applications</span>
-  <h2>Some examples of applications of this technique to other PDE</h2>
-  <ul class="clean" style="display: flex; flex-direction: column; gap: 24px; text-align: left; max-width: 85%; margin: 0 auto;">
-    <li class="fragment fade-up">KDV : Linares, Miyazaki, and Ponce (2019), Friedman, Ria&ntilde;o, Roudenko, Son, and Yang (2022) </li>
-    <li class="fragment fade-up">Derivative Schr&ouml;dinger: Linares, Ponce, and Santos (2019)</li>
-    <li class="fragment fade-up">Nonlinear Klein–Gordon and Dirac equations: Casenave and Naumkin (2020)</li>
-    <li class="fragment fade-up">Generalized Hartree: Arora, Ria&ntilde;o, and Roudenko (2021)</li>
-    <li class="fragment fade-up">Bi-NLS (4th order NLS): Petrenko, Ria&ntilde;o, and Roudenko (2026)</li>       
-  </ul>
 </section>
 
 <section>
@@ -780,6 +811,19 @@
   </div>
   <p class="small muted fragment fade-up" style="margin-top:15px">Note, within the higher dimensional extension we also include the case of the bi-NLS with combined nonlinearities.</p>
   <div class="footer-note" style="margin-top:20px">Work in progress with I. Petrenko, O. Riaño, and S. Roudenko.</div>
+</section>
+
+
+<section>
+  <span class="kicker">Previous applications</span>
+  <h2>Some examples of applications of this technique to other PDE</h2>
+  <ul class="clean" style="display: flex; flex-direction: column; gap: 24px; text-align: left; max-width: 85%; margin: 0 auto;">
+    <li class="fragment fade-up">KDV : Linares, Miyazaki, and Ponce (2019), Friedman, Ria&ntilde;o, Roudenko, Son, and Yang (2022) </li>
+    <li class="fragment fade-up">Derivative Schr&ouml;dinger: Linares, Ponce, and Santos (2019)</li>
+    <li class="fragment fade-up">Nonlinear Klein–Gordon and Dirac equations: Casenave and Naumkin (2020)</li>
+    <li class="fragment fade-up">Generalized Hartree: Arora, Ria&ntilde;o, and Roudenko (2021)</li>
+    <li class="fragment fade-up">Bi-NLS (4th order NLS): Petrenko, Ria&ntilde;o, and Roudenko (2026)</li>       
+  </ul>
 </section>
 
 <section>
@@ -905,10 +949,8 @@
       <p class="small">Initialize with \(u_0=AQ\) and vary \(A\).</p>
     </div>
     <div class="layout-2" style="gap:14px">
-      <div class="mini-card fragment fade-up"><h3>Monitor</h3><p class="small">profiles, \(L^\infty\), oscillations, dispersion, concentration</p></div>
-      <div class="mini-card fragment fade-up"><h3>Combined effect</h3><p class="small">the ground-state threshold picture can become much richer</p></div>
-      <div class="mini-card fragment fade-up"><h3>Low powers</h3><p class="small">connects directly to weighted non-vanishing theory</p></div>
-      <div class="mini-card fragment fade-up"><h3>Quadratic phase</h3><p class="small">tests the sign and size suggested by global theory</p></div>
+      <div class="mini-card fragment fade-up"><h3>Combined effect</h3><p class="small">How does the combined effect influence the dynamics?</p></div>
+      <div class="mini-card fragment fade-up"><h3>Low powers</h3><p class="small">What happens for low powers?</p></div>
     </div>
   </div>
 </section>
@@ -964,7 +1006,7 @@
         u_0(x)=e^{ibx^2/4}P(x).
         \]
       </div>
-      <div class="callout blue fragment fade-up small" style="margin-top:30px">Positive phase tends to spread; the opposite sign supports blow-up.</div>
+      <div class="callout blue fragment fade-up small" style="margin-top:30px">Positive phase tends to spread; the negative phase supports blow-up.</div>
     </div>
     <div>
       <div class="figure-grid cols-2">
