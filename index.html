@@ -113,7 +113,7 @@
       <p class="small">For small nonlinear terms \(0 < \alpha < 1\) differentiating \(|u|^\alpha u\) can introduce singularities.</p>
       <div class="math-display small">
         \[
-        \partial (\abs u^{\alpha}) \approx \alpha \abs u^{\alpha-1} \abs \partial u.
+        \partial (\abs u^{\alpha}) \approx \alpha \abs u^{\alpha-1} \abs{\partial u}.
         \]
       </div>
       <p class="small muted fragment fade-up">If u becomes 0, the term becomes singular.</p>
@@ -159,7 +159,7 @@
       <p class="small"> Use a Nahas-Ponce interpolation to show</p>
       <div class="math-display small">
         \[
-        \|\langle x \rangle^{b}e^{it\partial_x^2}f\|_{L^2} \leq C \langle t \rangle^b\big( \|J^{b}f\|_{L^2}+\|\langle x\rangle^b f\|_{L^2} \big).
+        \|\langle x \rangle^{b}e^{it\partial_x^2}\partial_x^\beta f\|_{L^2} \leq C \langle t \rangle^b\big( \|J^{b + \beta}f\|_{L^2}+\|\langle x\rangle^b \partial_x^\beta f\|_{L^2} \big).
         \]
       </div>
       <p class="small muted fragment fade-up">This avoids the induction and allows for \(b \in \R^+\)</p> 
