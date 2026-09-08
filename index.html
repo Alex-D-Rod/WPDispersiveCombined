@@ -41,7 +41,7 @@
     <div>
       <!--<div class="title-chip">weighted spaces · one dimension · combined nonlinearities</div>-->
       <h1 style="text-align: center;">Well-posedness for Dispersive PDE <br> with <span class="gold">combined</span> <br> nonlinearities.</h1>
-      <div style="text-align: center;" class="title-meta">Alex D. Rodriguez · FIU · Puerto Morelos 2026</div>
+      <div style="text-align: center;" class="title-meta">Alex D. Rodriguez · FIU </div>
       <!--<div class="pill-row" style="margin-top:34px">
         <span class="pill">local theory in \(\X\)</span>
         <span class="pill">pseudoconformal globalization</span>
@@ -86,7 +86,7 @@
       <!-- List remains centered as a block, but text aligns left for readability -->
       <ul class="clean small" style="display: flex; flex-direction: column; gap: 24px; text-align: left; max-width: 85%; margin: 0 auto;">
         <li class="fragment fade-up">LWP/GWP in a Sobolev space for single and two nonlinear terms (Ohta '95, Tao-Visan-Zhang '07, Pocovnicu et al. '12, Carles-Sparber '21, Kfouri-Le Coz-Tsai '22, ...)</li>
-        <li class="fragment fade-up">LWP/GWP in weighted Sobolev spaces (Casenave-Naumkin '16) allowing for small power nonlinearity in any dimension</li>
+        <li class="fragment fade-up">LWP/GWP in weighted Sobolev spaces (Cazenave-Naumkin '16) allowing for small power nonlinearity in any dimension</li>
       </ul>
     </div>
   </div>
@@ -146,7 +146,7 @@
   <h2>Integer vs. non-integer weights</h2>
   <div class="layout-2">
     <div class="glass fragment fade-up">
-      <h3><span class="gold">Casenave-Naumkin</span> method:</h3>
+      <h3><span class="gold">Cazenave-Naumkin</span> method:</h3>
       <p class="small">Use integer weights and an induction to show</p>
       <div class="math-display small">
         \[
@@ -380,6 +380,11 @@
       \]
     </div>
   </div>
+  <span class="fragment fade-up" data-fragment-index="3">
+    <div class="callout good fragment fade-out" data-fragment-index="4">
+      <p class="small">Using the infimum condition, we have: \(|u|^{\alpha - 2k} \lesssim \lambda^{-|\alpha-2k|} + \|u\|_{\mathcal{X}}^{|\alpha-2k|}\).</p>
+    </div>
+  </span>
   <span class="fragment fade-up" data-fragment-index="6" style="margin-top:10px">
     <div class="callout good fragment fade-out" data-fragment-index="7">
       <p class="small">We choose \(\rho\) to be the largest order derivative without loss of generality, but note that this is not necessary.</p>
@@ -417,23 +422,24 @@
 <section>
   <span class ="kicker">Examples of nonlinearities</span>
   <h2>What satisfies our condition?</h2>
-  <p class="small muted fragment fade-up"> The answers are quite interesting!</p>
+  <p class="small muted fragment fade-up" data-fragment-index="0"> The answers are quite interesting!</p>
   <div class="layout-2" style="margin-top:10px;">
     <div class="layer-stack">
-      <div class="layer fragment fade-up">Finite sums: \(\;\mathcal{N}(u) = c_1|u|^{\alpha_1} + c_2|u|^{\alpha_2} ... + c_N|u|^{\alpha_N}\)</div>
-      <div class="layer fragment fade-up">Trigonometric Functions: \(\mathcal{N}(u) = \sin(\alpha|u|^\gamma)\;\) or \(\;\mathcal{N}(u) = \cos(\alpha|u|^\gamma)\)</div>
-      <div class="layer fragment fade-up"><p>Exponential Functions: </p> \(\qquad \mathcal{N}(u) = e^{\alpha|u|^\gamma}\)</div>
+      <div class="layer fragment fade-up" data-fragment-index="1">Finite sums: \(\;\mathcal{N}(u) = c_1|u|^{\alpha_1} + c_2|u|^{\alpha_2} ... + c_N|u|^{\alpha_N}\)</div>
+      <div class="layer fragment fade-up" data-fragment-index="2">Trigonometric Functions: \(\mathcal{N}(u) = \sin(\alpha|u|^\gamma)\;\) or \(\;\mathcal{N}(u) = \cos(\alpha|u|^\gamma)\)</div>
+      <div class="layer fragment fade-up" data-fragment-index="3"><p>Exponential Functions: </p> \(\qquad \mathcal{N}(u) = e^{\alpha|u|^\gamma}\)</div>
     </div>
-    <div class="term-stream fragment fade-up" style="min-height: auto; padding-bottom: 20px; width:auto;">
+    <div class="term-stream" style="min-height: auto; padding-bottom: 20px; width:auto;">
       <div class="term-core">\(\mathcal{X}\)</div>
-      <div class="term" style="--delay:0s">\(\pm|u|^{p}u \pm |u|^{q}u\)</div>
-      <div class="term" style="--delay:-2s">\(\cos(\alpha|u|^\gamma)u\)</div>
-      <div class="term" style="--delay:-4s">\(\sin(\alpha|u|^\gamma)u\)</div>
-      <div class="term" style="--delay:-6s">\(e^{\alpha|u|^\gamma}u\)</div>
-      <div class="term" style="--delay:-8s">\(\pm|u|^{\alpha_1}u \pm |u|^{\alpha_2}u \pm |u|^{\alpha_3}u + ...\)</div>
+      <div class="term fragment" data-fragment-index="1" style="--delay:0s">\(\pm|u|^{p}u \pm |u|^{q}u\)</div>
+      <div class="term fragment" data-fragment-index="2" style="--delay:-2s">\(\cos(\alpha|u|^\gamma)u\)</div>
+      <div class="term fragment" data-fragment-index="2" style="--delay:-4s">\(\sin(\alpha|u|^\gamma)u\)</div>
+      <div class="term fragment" data-fragment-index="3" style="--delay:-6s">\(e^{\alpha|u|^\gamma}u\)</div>
+      <div class="term fragment" data-fragment-index="3" style="--delay:-7s">\(e^{\alpha|u|}u \)</div>
+      <div class="term fragment" data-fragment-index="1" style="--delay:-8s">\(\pm|u|^{\alpha_1}u \pm |u|^{\alpha_2}u \pm |u|^{\alpha_3}u + ...\)</div>
     </div>
   </div>  
-    <div class="callout fragment fade-up small" style="margin-top:15px">
+    <div class="callout fragment fade-up small" data-fragment-index="4" style="margin-top:15px">
       <h3 style="display:inline"><span class="gold">LWP</span> Theorem</h3>
       <p class="small muted" style="display:inline">(Ria&ntilde;o, ADR, Roudenko) Nonlinearity '26</p>
       <p>
@@ -692,8 +698,8 @@
           <span class="pc-end left"></span>
           <span class="pc-end right"></span>
 
-          <span class="pc-end-label left">\(-T\)</span>
-          <span class="pc-end-label right">\(T\)</span>
+          <span class="pc-end-label left">\(0\)</span>
+          <span class="pc-end-label right"><i>T</i><sub class="pc-time-index">0</sub></span>
         </div>
       </div>
     </div>
@@ -810,7 +816,7 @@
       </div>
     </div>
   </div>
-  <p class="small muted fragment fade-up" style="margin-top:15px">Note, within the higher dimensional extension we also include the case of the bi-NLS with combined nonlinearities.</p>
+  <p class="small muted fragment fade-up" style="margin-top:15px">Note, within the higher dimensional extension we also include the case of the bi-harmonic NLS with combined nonlinearities.</p>
   <div class="footer-note" style="margin-top:20px">Work in progress with I. Petrenko, O. Riaño, and S. Roudenko.</div>
 </section>
 
@@ -821,58 +827,96 @@
   <ul class="clean" style="display: flex; flex-direction: column; gap: 24px; text-align: left; max-width: 85%; margin: 0 auto;">
     <li class="fragment fade-up">KDV : Linares, Miyazaki, and Ponce (2019), Friedman, Ria&ntilde;o, Roudenko, Son, and Yang (2022) </li>
     <li class="fragment fade-up">Derivative Schr&ouml;dinger: Linares, Ponce, and Santos (2019)</li>
-    <li class="fragment fade-up">Nonlinear Klein–Gordon and Dirac equations: Casenave and Naumkin (2020)</li>
+    <li class="fragment fade-up">Nonlinear Klein–Gordon and Dirac equations: Cazenave and Naumkin (2020)</li>
     <li class="fragment fade-up">Generalized Hartree: Arora, Ria&ntilde;o, and Roudenko (2021)</li>
-    <li class="fragment fade-up">Bi-NLS (4th order NLS): Petrenko, Ria&ntilde;o, and Roudenko (2026)</li>       
+    <li class="fragment fade-up">Bi-Harmonic NLS (4th order NLS): Petrenko, Ria&ntilde;o, and Roudenko (2026)</li>       
   </ul>
+</section>
+
+<section id="half-wave">
+  <span class="kicker">The nonlinear Half-Wave system</span>
+  <h2>Generalizing the NLS approach</h2>
+  <div class="math-display small" style="text-align:center">
+        \[
+          \left\{ \begin{aligned}
+            &i\partial_t \phi - {\bf A}\langle |\nabla|\rangle \phi - \frac{\mu_1 - 1}{2}[\langle |\nabla|\rangle^{-1}({\bf a}\cdot \phi)]{\bf b} + \frac{\mu_2}{2}[\langle |\nabla|\rangle^{-1}|{\bf a}\cdot \phi|^\alpha ({\bf a}\cdot \phi)]{\bf b} = 0, \quad x\in \mathbb{R}^N,\, \, \, t\in \mathbb{R},\\
+            &\phi(x,0) = \phi_0(x)
+          \end{aligned}\right.
+        \]
+      </div>
+      <p class="small" >where \(\langle |\nabla|\rangle=(1-\partial_x^2)^{1/2}\), \( {\bf A} \in \mathbb{R}^{d \times d}\) is diagonal, \(\mu_1,\mu_2 \in \mathbb{C}\), \(a \in \mathbb{C}^d \setminus \{\mathbf{0}\}\), and  \(b \in \mathbb{C}^d\).</p>
+      <div class="layout-2" style="grid-template-columns:minmax(0, 1.15fr) minmax(0, 0.85fr); align-items:stretch; row-gap:0">
+          <div class="glass fragment fade-up" style="grid-column:1; grid-row:2">
+            <h3 class="small" style="display:inline">Space Definition:</h3>
+            <div class="math-display small">
+              \[
+                \mathcal{X}_{s,n,d}=\left\{\begin{aligned}
+                & u\in \dot{H}^{r+1}(\mathbb{R}^N,\C^d)\cap\dot{H}^{s}(\mathbb{R}^N,\C^d):\\
+                &\langle x\rangle^n \partial^{\beta}u\in L^{\infty}(\mathbb{R}^N,\C^d), \quad 0\leq |\beta|\leq r, \\
+                &\langle x\rangle^n \langle |\nabla|\rangle^{\operatorname{frac}(s)}\partial^{\beta}u\in L^2(\mathbb{R}^N,\C^d), \\
+                &\hspace{2em} r+1\leq |\beta|\leq \lfloor s \rfloor,
+                \end{aligned}\right.
+              \]
+            </div>
+            <p class="small" >where \(r\geq \lfloor \frac{N}{2}\rfloor,\; s>\frac{N}{2}+1+r\), and</p>
+            <div class="math-display small">
+              \[
+                n> \begin{cases}
+                  0 & \text{if } N=1 \text{ and } r=0, \\
+                  \frac{N}{2\alpha} & \text{if } r\geq 1.
+                \end{cases}
+              \]
+          </div>
+          </div>
+      <div style="grid-column:2; grid-row:2; display:flex; flex-direction:column; gap:12px">
+      <div class="callout fragment fade-up small" style="margin-top:0; flex:1">
+      <h3 style="display:inline">Preliminary <span class="gold">LWP</span> Theorem</h3>
+      <p>
+        Let \(u_0 \in \mathcal{X}_{s,n,d}\) satisfy,
+      </p>
+        <div class="math-display">
+          \[
+               \inf_{x\in\mathbb{R}^N} ~\langle x \rangle^n |{\bf a} \cdot u(x)| \geq \lambda > 0 \; \mbox{ for some } \lambda>0.
+          \]
+        </div>
+      <p>
+        Then there exists \(T>0\) and a unique solution \(u \in C([-T,T], \mathcal{X}_{s,n,d})\) of the nonlinear half-wave system and the map \(u_0 \mapsto u(\cdot,t)\) is Lipshitz continuous.
+      </p>
+    </div>
+    <div class="callout good fragment fade-up small" style="margin-top:0">
+      This result can be used to obtain LWP for the NLKG in a weak sense!
+    </div>
+      </div>
+      </div>
+  <div class="footer-note">Work in progress with O. Riaño and S. Roudenko.</div>
 </section>
 
 <section>
   <span class="kicker">The nonlinear Klein–Gordon</span>
   <h2>The same architecture for the NLKG</h2>
-  <div class="layout-2 narrow-left">
     <div>
+      <div class="small">For the \(X_{s,n,d}\) space, choose \(N = 1, d = 2\), \(\mu_1,\nu_k \in \mathbb{C}\), and \(\alpha_k>0\) for \(k=1,\dots,K\). Consider the NLKG with combined nonlinearities:</div>
       <div class="math-display small">
         \[
         w_{tt}-w_{xx}+\mu_1 w+\sum_{k=1}^{K}\nu_k|w|^{\alpha_k}w=0.
         \]
       </div>
-      <p class="small">Set \(\langle |\nabla|\rangle=(1-\partial_x^2)^{1/2}\) and</p>
+      <p class="small"></p>
       <div class="math-display small">
         \[
-        U=\frac12\left(\mathbf a w+i\mathbf b\langle |\nabla|\rangle^{-1}w_t\right),
-        \qquad
-        A=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+        \phi=\frac12\left(\mathbf a w+i\mathbf b\langle |\nabla|\rangle^{-1}w_t\right),
+        \;
+        {\bf A}=\begin{pmatrix}1&0\\0&-1\end{pmatrix}, \;{\bf a} = \begin{pmatrix}1\\1\end{pmatrix},\; {\bf b} = \begin{pmatrix}1\\-1\end{pmatrix}.
         \]
       </div>
       <p class="small fragment fade-up">Then NLKG becomes a first-order half-wave system:</p>
       <div class="math-display small fragment fade-up">
         \[
-        iU_t-A \langle |\nabla|\rangle U-\mathcal M(U)- \sum_{k=1}^{K} \mathcal N_k(U)=0.
+        i\phi_t-A \langle |\nabla|\rangle \phi-\mathcal M(\phi)- \sum_{k=1}^{K} \mathcal N_k(\phi)=0.
         \]
       </div>
-      <p class="tiny muted fragment fade-up">\(\mathcal{M}(U) = \frac{\mu_1 - 1}{2}[\langle |\nabla|\rangle^{-1}({\bf a}\cdot U)]{\bf b}\) and \(\mathcal{N}_k(U) = -\frac{\nu_{k}}{2}[\langle |\nabla|\rangle^{-1}|{\bf a}\cdot U|^{\alpha_k} ({\bf a}\cdot U)]{\bf b}\).</p>
+      <p class="tiny muted fragment fade-up">\(\mathcal{M}(\phi) = \frac{\mu_1 - 1}{2}[\langle |\nabla|\rangle^{-1}({\bf a}\cdot \phi)]{\bf b}\) and \(\mathcal{N}_k(\phi) = -\frac{\nu_{k}}{2}[\langle |\nabla|\rangle^{-1}|{\bf a}\cdot \phi|^{\alpha_k} ({\bf a}\cdot \phi)]{\bf b}\).</p>
     </div>
-    <span>
-      <div class="glass fragment fade-up">
-      <div class="math-display small">
-        \[
-        \mathcal{X}_d=\left\{\begin{aligned}
-        & u\in H^{\frac{3}{2}+}(\mathbb{R},\C^d):\\
-        &\langle x\rangle^n u\in L^{\infty}(\mathbb{R},\C^d), \\
-        &\langle x\rangle^n \langle |\nabla|\rangle^{\frac{3}{2}+}u\in L^2(\mathbb{R},\C^d),
-        \end{aligned}\right.
-        \]
-      </div>
-    </div>
-    <div class="callout fragment fade-up small" style="margin-top:15px">
-      The trick here is using pseudo-differential operators and the same fractional weight tricks from the NLS case on the transformed half-wave system.
-    </div>
-    <div class="callout good fragment fade-up small" style="margin-top:15px">
-      We can then reverse the transformation and obtain LWP in a weak sense.
-    </div>
-    </span>
-  </div>
   <div class="footer-note">Work in progress with O. Riaño and S. Roudenko.</div>
 </section>
 
@@ -889,7 +933,7 @@
     <ul class="clean" style="display: flex; flex-direction: column; gap: 24px; text-align: left; max-width: 85%; margin: 0 auto;">
     <li class="small">With combined nonlinearities, we cover the cases present in Scalar Field Theory, including \(\phi^4\) and \(\phi^6\) models.</li>
     <li class="small">Lower regularity well-posedness for a larger class of nonlinearities. </li>
-    <li class="small">An extension of the established Casenave-Naumkin result to fractional weights and derivatives.</li>
+    <li class="small">An extension of the established Cazenave-Naumkin result to fractional weights and derivatives.</li>
     <li class="small">We first investigate in 1D and then extend to higher dimensions.</li>     
   </ul>
   </div>
@@ -934,8 +978,7 @@
 <section>
   <span class="kicker">numerical setup</span>
   <h2>Questions for combined nonlinearities</h2>
-  <div class="layout-2">
-    <div>
+      <div>
       <div class="math-display small">
         \[
         iu_t+u_{xx}+\epsilon_1|u|^{\alpha_1}u+
@@ -949,11 +992,10 @@
       </div>
       <p class="small">Initialize with \(u_0=AQ\) and vary \(A\).</p>
     </div>
-    <div class="layout-2" style="gap:14px">
+    <div class="layout-2" style="gap:14px; margin-top:20px;">
       <div class="mini-card fragment fade-up"><h3>Combined effect</h3><p class="small">How does the combined effect influence the dynamics?</p></div>
       <div class="mini-card fragment fade-up"><h3>Low powers</h3><p class="small">What happens for low powers?</p></div>
     </div>
-  </div>
 </section>
 
 <section>
@@ -1087,7 +1129,7 @@
     </div>
   </div>
   <div class="theorem-box gold fragment fade-up" style="margin-top:22px">
-    <p class="small"><strong>Exponential Blow-up Theorem (ADR, Stud. Appl. Math - forthcoming): </strong>Let \(u_0\in H^1(\R)\) have finite variance. If</p>
+    <p class="small"><strong>Exponential Blow-up Theorem (ADR, Stud. Appl. Math '26): </strong>Let \(u_0\in H^1(\R)\) have finite variance. If</p>
     <div class="math-display small">\[E[u_0]+\kappa M[u_0]\lt0,\qquad \kappa\approx14.797,\]</div>
     <p class="small">then the solution of \(iu_t+u_{xx}+e^{|u|}u=0\) blows up in finite positive time.</p>
   </div>

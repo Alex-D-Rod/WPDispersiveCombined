@@ -182,6 +182,17 @@ section.section-slide::before {
 .title-slide .muted, .section-slide .muted { color: rgba(255,255,255,0.68); }
 .title-slide .gold, .section-slide .gold { color: var(--fiu-gold-2); }
 
+.title-slide,
+.section-slide {
+  isolation: isolate;
+}
+
+.title-slide > :not(.wavefield),
+.section-slide > :not(.wavefield) {
+  position: relative;
+  z-index: 1;
+}
+
 .title-grid {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
@@ -828,6 +839,7 @@ ol.steps li::before {
 
 .wavefield {
   position: absolute;
+  z-index: 0;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
@@ -915,11 +927,10 @@ ol.steps li::before {
 /* expanding interval */
 .pc-growing-interval {
   position: absolute;
-  left: 50%;
+  left: 48px;
   top: 82px;
   height: 6px;
   width: 220px;
-  transform: translateX(-50%);
   border-radius: 999px;
   background: linear-gradient(90deg, #2f7ed8 0%, #5f97d9 50%, #2f7ed8 100%);
   box-shadow: 0 0 16px rgba(47,126,216,0.16);
@@ -954,11 +965,22 @@ ol.steps li::before {
 }
 
 .pc-end-label.left {
-  left: -16px;
+  left: 0;
+  transform: translateX(-50%);
 }
 
 .pc-end-label.right {
   right: -10px;
+}
+
+.pc-end-label .pc-time-index {
+  display: inline-block;
+  position: relative;
+  top: 0.35em;
+  margin-left: 0.06em;
+  font-size: 0.65em;
+  line-height: 1;
+  vertical-align: baseline;
 }
 
 .pc-interval-note {
