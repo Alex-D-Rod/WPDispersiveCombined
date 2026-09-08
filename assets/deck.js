@@ -19,6 +19,38 @@
     }
   }
 
+  var intervalFrame;
+
+  function animateTimeIndex() {
+    cancelAnimationFrame(intervalFrame);
+    var slide = Reveal.getCurrentSlide();
+    var interval = slide && slide.querySelector('.pc-growing-interval');
+    if (!interval) return;
+    var label = interval.querySelector('.pc-time-index');
+    var animation = interval.getAnimations().find(function(item) {
+      return item.animationName === 'pcIntervalGrow';
+    });
+    if (!label || !animation) return;
+    animation.currentTime = 0;
+    var index = 0;
+    var lastIteration = -1;
+    label.textContent = '0';
+
+    function update() {
+      var timing = animation.effect.getComputedTiming();
+      var duration = animation.effect.getTiming().duration;
+      var elapsed = Number(animation.currentTime) % duration;
+      if (timing.currentIteration !== lastIteration || elapsed <= duration * 0.18) {
+        index = 0;
+      } else {
+        index += 1;
+      }
+      lastIteration = timing.currentIteration;
+      label.textContent = String(index);
+      intervalFrame = requestAnimationFrame(update);
+    }
+    intervalFrame = requestAnimationFrame(update);
+  }
   
 
   installFigureFallbacks();
@@ -41,8 +73,10 @@
   Reveal.on('ready', function() {
     installFigureFallbacks();
     typesetMath();
+    animateTimeIndex();
   });
   Reveal.on('slidechanged', function() {
     typesetMath();
+    animateTimeIndex();
   });
 })();
